@@ -9,7 +9,7 @@
   <title>إلى قلبك — رحلة عبر ثلاثة عوالم</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --deep-black: #03040A;
@@ -20,8 +20,8 @@
       --soft-rose: #DFA5C8;
       --rose-gold: #D5A88D;
       --moonlight-blue: #9BBEEA;
-      --pearl-white: #F6F2FF;
-      --warm-light: #FFF0D5;
+      --pearl-white: #FFFFFF;
+      --warm-light: #FFF5E4;
 
       --safe-top: env(safe-area-inset-top, 16px);
       --safe-bottom: env(safe-area-inset-bottom, 20px);
@@ -108,8 +108,8 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      border: 1px solid rgba(246, 242, 255, 0.16);
-      background: rgba(7, 16, 29, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(7, 16, 29, 0.58);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       color: var(--pearl-white);
@@ -125,16 +125,16 @@
     }
 
     .icon-btn.active {
-      border-color: rgba(223, 165, 200, 0.48);
-      box-shadow: 0 0 18px rgba(161, 139, 234, 0.22);
+      border-color: rgba(223, 165, 200, 0.58);
+      box-shadow: 0 0 18px rgba(161, 139, 234, 0.28);
     }
 
     .icon-btn svg {
-      width: 18px;
-      height: 18px;
+      width: 19px;
+      height: 19px;
       stroke: currentColor;
       fill: none;
-      stroke-width: 1.6;
+      stroke-width: 1.75;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
@@ -146,25 +146,25 @@
       direction: ltr;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(3, 4, 10, 0.35);
-      border: 1px solid rgba(246, 242, 255, 0.08);
+      background: rgba(3, 4, 10, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.14);
     }
 
     .chapter-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: rgba(246, 242, 255, 0.22);
+      background: rgba(255, 255, 255, 0.28);
       transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .chapter-dot.completed {
-      background: rgba(223, 165, 200, 0.65);
+      background: rgba(223, 165, 200, 0.75);
     }
 
     .chapter-dot.active {
-      width: 9px;
-      height: 9px;
+      width: 10px;
+      height: 10px;
       background: var(--warm-light);
       box-shadow: 0 0 12px var(--warm-light), 0 0 24px var(--dream-lavender);
     }
@@ -177,7 +177,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: calc(var(--safe-top) + 64px) clamp(20px, 6vw, 48px) calc(var(--safe-bottom) + 22px);
+      padding: calc(var(--safe-top) + 64px) clamp(18px, 5vw, 48px) calc(var(--safe-bottom) + 20px);
       pointer-events: none;
       text-align: center;
     }
@@ -186,9 +186,10 @@
       opacity: 0;
       transform: translateY(-10px);
       transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
-      padding: 6px 18px;
-      border-radius: 20px;
-      background: rgba(3, 4, 10, 0.32);
+      padding: 8px 22px;
+      border-radius: 22px;
+      background: rgba(3, 4, 10, 0.56);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .chapter-header.visible {
@@ -198,51 +199,55 @@
 
     .chapter-label {
       font-family: var(--font-display);
-      font-size: clamp(0.72rem, 2.6vw, 0.85rem);
-      letter-spacing: 0.22em;
+      font-size: clamp(0.88rem, 3.2vw, 1.05rem);
+      font-weight: 500;
+      letter-spacing: 0.14em;
       color: var(--rose-gold);
-      opacity: 0.9;
       margin-bottom: 4px;
     }
 
     .chapter-title {
       font-family: var(--font-display);
-      font-weight: 300;
-      font-size: clamp(1.15rem, 4.4vw, 1.55rem);
+      font-weight: 600;
+      font-size: clamp(1.4rem, 5.4vw, 1.95rem);
       color: var(--pearl-white);
-      text-shadow: 0 2px 18px rgba(3, 4, 10, 0.95);
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.98);
     }
 
     .story-stage {
       width: 100%;
-      max-width: 540px;
-      min-height: 118px;
+      max-width: 640px;
+      min-height: 136px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
       margin-top: auto;
-      margin-bottom: clamp(10px, 2.4vh, 20px);
+      margin-bottom: clamp(10px, 2.4vh, 22px);
     }
 
     .story-line {
       font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(1.1rem, 4.3vw, 1.55rem);
-      line-height: 1.8;
+      font-weight: 500;
+      font-size: clamp(1.38rem, 5.4vw, 2.05rem);
+      line-height: 1.75;
       color: var(--pearl-white);
-      text-shadow: 0 2px 24px rgba(3, 4, 10, 0.98), 0 0 36px rgba(89, 64, 131, 0.55);
-      background: radial-gradient(ellipse at center, rgba(3, 4, 10, 0.62) 0%, rgba(3, 4, 10, 0.25) 68%, transparent 100%);
-      border-radius: 24px;
+      text-shadow:
+        0 2px 6px rgba(0, 0, 0, 1),
+        0 4px 26px rgba(0, 0, 0, 0.98),
+        0 0 38px rgba(89, 64, 131, 0.65);
+      background: radial-gradient(ellipse at center, rgba(3, 4, 10, 0.82) 0%, rgba(3, 4, 10, 0.52) 68%, transparent 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 26px;
       opacity: 0;
-      filter: blur(8px);
+      filter: blur(6px);
       transform: translateY(14px) scale(0.985);
       transition:
         opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
         filter 0.85s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
-      padding: 8px 18px;
+      padding: 12px 24px;
       max-width: 100%;
     }
 
@@ -254,22 +259,22 @@
 
     .story-line.exiting {
       opacity: 0;
-      filter: blur(6px);
+      filter: blur(5px);
       transform: translateY(-12px) scale(0.99);
     }
 
     .story-line.love-climax {
-      font-size: clamp(2rem, 8vw, 3.2rem);
-      font-weight: 500;
+      font-size: clamp(2.45rem, 9.6vw, 3.85rem);
+      font-weight: 700;
       color: var(--warm-light);
       text-shadow:
-        0 0 24px rgba(255, 240, 213, 0.85),
-        0 0 54px rgba(223, 165, 200, 0.75),
-        0 4px 20px rgba(3, 4, 10, 0.98);
+        0 0 24px rgba(255, 245, 228, 0.92),
+        0 0 54px rgba(223, 165, 200, 0.82),
+        0 4px 24px rgba(0, 0, 0, 1);
     }
 
     .action-dock {
-      min-height: 64px;
+      min-height: 68px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -282,26 +287,26 @@
 
     .cinematic-btn {
       position: relative;
-      min-width: 196px;
-      min-height: 50px;
-      padding: 13px 32px;
+      min-width: 224px;
+      min-height: 54px;
+      padding: 14px 36px;
       border-radius: 999px;
-      border: 1px solid rgba(246, 242, 255, 0.28);
-      background: rgba(13, 18, 36, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(13, 18, 36, 0.78);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       color: var(--pearl-white);
       font-family: var(--font-display);
-      font-size: clamp(0.95rem, 3.8vw, 1.08rem);
-      font-weight: 400;
+      font-size: clamp(1.12rem, 4.4vw, 1.3rem);
+      font-weight: 600;
       cursor: pointer;
       overflow: hidden;
       opacity: 0;
       transform: translateY(14px) scale(0.98);
       pointer-events: none;
       box-shadow:
-        0 0 24px rgba(161, 139, 234, 0.16),
-        inset 0 0 16px rgba(255, 240, 213, 0.06);
+        0 0 26px rgba(161, 139, 234, 0.22),
+        inset 0 0 18px rgba(255, 245, 228, 0.08);
       transition:
         opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
         transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -317,10 +322,10 @@
 
     .cinematic-btn.pressed {
       transform: scale(0.97) !important;
-      border-color: rgba(255, 240, 213, 0.75);
+      border-color: rgba(255, 245, 228, 0.85);
       box-shadow:
         0 0 36px rgba(223, 165, 200, 0.45),
-        inset 0 0 24px rgba(255, 240, 213, 0.2);
+        inset 0 0 24px rgba(255, 245, 228, 0.2);
     }
 
     .cinematic-btn::before {
@@ -333,8 +338,8 @@
         from var(--btn-angle, 0deg),
         transparent 0%,
         transparent 72%,
-        rgba(255, 240, 213, 0.9) 86%,
-        rgba(223, 165, 200, 0.7) 94%,
+        rgba(255, 245, 228, 0.95) 86%,
+        rgba(223, 165, 200, 0.75) 94%,
         transparent 100%
       );
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -357,7 +362,7 @@
     .btn-ripple {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 240, 213, 0.65) 0%, rgba(223, 165, 200, 0.2) 55%, transparent 75%);
+      background: radial-gradient(circle, rgba(255, 245, 228, 0.65) 0%, rgba(223, 165, 200, 0.2) 55%, transparent 75%);
       transform: translate(-50%, -50%) scale(0);
       animation: rippleExpand 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       pointer-events: none;
@@ -387,11 +392,11 @@
     }
 
     .mem-node {
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
-      border: 1px solid rgba(223, 165, 200, 0.45);
-      background: rgba(23, 16, 43, 0.5);
+      border: 1px solid rgba(223, 165, 200, 0.55);
+      background: rgba(23, 16, 43, 0.65);
       transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -417,8 +422,8 @@
       position: fixed;
       left: 0;
       top: 0;
-      width: 96px;
-      height: 96px;
+      width: 108px;
+      height: 108px;
       border-radius: 50%;
       background: transparent;
       border: none;
@@ -444,21 +449,21 @@
       top: 14px;
       white-space: nowrap;
       font-family: var(--font-display);
-      font-size: clamp(0.78rem, 3vw, 0.9rem);
-      font-weight: 400;
+      font-size: clamp(0.96rem, 3.8vw, 1.14rem);
+      font-weight: 600;
       color: var(--pearl-white);
-      text-shadow: 0 2px 10px rgba(3, 4, 10, 0.95);
-      background: rgba(7, 16, 29, 0.65);
-      padding: 4px 12px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 1);
+      background: rgba(7, 16, 29, 0.84);
+      padding: 6px 15px;
       border-radius: 999px;
-      border: 1px solid rgba(223, 165, 200, 0.35);
+      border: 1px solid rgba(223, 165, 200, 0.48);
       transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
     }
 
     .memory-hotspot.opened .memory-hotspot-label {
-      border-color: rgba(255, 240, 213, 0.65);
+      border-color: rgba(255, 245, 228, 0.78);
       color: var(--warm-light);
-      background: rgba(23, 16, 43, 0.72);
+      background: rgba(23, 16, 43, 0.88);
     }
 
     .memory-reader {
@@ -469,8 +474,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: calc(var(--safe-top) + 74px) clamp(24px, 7vw, 56px) calc(var(--safe-bottom) + 34px);
-      background: rgba(3, 4, 10, 0.45);
+      padding: calc(var(--safe-top) + 74px) clamp(22px, 6vw, 56px) calc(var(--safe-bottom) + 34px);
+      background: rgba(3, 4, 10, 0.68);
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
@@ -484,19 +489,27 @@
 
     .memory-reader-title {
       font-family: var(--font-display);
-      font-size: clamp(0.95rem, 3.6vw, 1.15rem);
+      font-size: clamp(1.15rem, 4.4vw, 1.42rem);
+      font-weight: 600;
       color: var(--rose-gold);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
+      background: rgba(7, 16, 29, 0.75);
+      padding: 6px 18px;
+      border-radius: 999px;
     }
 
     .memory-reader-body {
-      max-width: 460px;
+      max-width: 540px;
       font-family: var(--font-display);
-      font-weight: 300;
-      font-size: clamp(1.2rem, 4.8vw, 1.65rem);
-      line-height: 1.85;
+      font-weight: 500;
+      font-size: clamp(1.42rem, 5.6vw, 2.05rem);
+      line-height: 1.8;
       color: var(--pearl-white);
-      text-shadow: 0 2px 24px rgba(3, 4, 10, 0.98);
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 1);
+      background: rgba(7, 16, 29, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 20px 24px;
       margin-top: auto;
       margin-bottom: 24px;
       transform: translateY(14px);
@@ -508,17 +521,18 @@
     }
 
     .subtle-btn {
-      min-width: 140px;
-      min-height: 46px;
-      padding: 10px 26px;
+      min-width: 164px;
+      min-height: 50px;
+      padding: 12px 30px;
       border-radius: 999px;
-      border: 1px solid rgba(246, 242, 255, 0.25);
-      background: rgba(7, 16, 29, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      background: rgba(7, 16, 29, 0.84);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       color: var(--pearl-white);
       font-family: var(--font-display);
-      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      font-size: clamp(1.05rem, 4.2vw, 1.2rem);
+      font-weight: 600;
       cursor: pointer;
     }
 
@@ -527,17 +541,18 @@
     }
 
     .replay-btn {
-      min-width: 180px;
-      min-height: 46px;
-      padding: 10px 24px;
+      min-width: 210px;
+      min-height: 50px;
+      padding: 12px 28px;
       border-radius: 999px;
-      border: 1px solid rgba(246, 242, 255, 0.2);
-      background: rgba(7, 16, 29, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(7, 16, 29, 0.76);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      color: rgba(246, 242, 255, 0.9);
+      color: var(--pearl-white);
       font-family: var(--font-display);
-      font-size: clamp(0.85rem, 3.3vw, 0.96rem);
+      font-size: clamp(1rem, 4vw, 1.15rem);
+      font-weight: 600;
       cursor: pointer;
       opacity: 0;
       transform: translateY(10px);
@@ -556,8 +571,13 @@
     }
 
     .gesture-hint {
-      font-size: clamp(0.78rem, 3vw, 0.88rem);
-      color: rgba(246, 242, 255, 0.65);
+      font-family: var(--font-display);
+      font-size: clamp(0.96rem, 3.8vw, 1.12rem);
+      font-weight: 500;
+      color: var(--pearl-white);
+      background: rgba(3, 4, 10, 0.68);
+      padding: 6px 16px;
+      border-radius: 999px;
       opacity: 0;
       transition: opacity 0.9s ease;
     }
@@ -572,20 +592,20 @@
         padding-bottom: calc(var(--safe-bottom) + 14px);
       }
       .story-stage {
-        min-height: 68px;
+        min-height: 76px;
         margin-bottom: 8px;
       }
       .story-line {
-        font-size: clamp(1rem, 3.2vw, 1.3rem);
-        line-height: 1.5;
+        font-size: clamp(1.2rem, 4.2vw, 1.55rem);
+        line-height: 1.55;
       }
       .action-dock {
-        min-height: 48px;
+        min-height: 52px;
         gap: 8px;
       }
       .cinematic-btn {
-        min-height: 44px;
-        padding: 9px 24px;
+        min-height: 46px;
+        padding: 9px 26px;
       }
     }
   </style>
@@ -607,18 +627,6 @@
         <svg viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="3"></circle>
           <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"></path>
-        </svg>
-      </button>
-      <button type="button" class="icon-btn" id="sound-toggle" aria-label="تشغيل أو إيقاف الصوت">
-        <svg id="sound-icon-off" viewBox="0 0 24 24">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <line x1="23" y1="9" x2="17" y2="15"></line>
-          <line x1="17" y1="9" x2="23" y2="15"></line>
-        </svg>
-        <svg id="sound-icon-on" viewBox="0 0 24 24" style="display:none;">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
         </svg>
       </button>
     </div>
@@ -666,7 +674,6 @@
 
       const CONFIG = {
         recipientName: 'LINA',
-        customAudioUrl: '',
         palette: {
           deepBlack: 0x03040A,
           cosmicNavy: 0x07101D,
@@ -676,8 +683,8 @@
           softRose: 0xDFA5C8,
           roseGold: 0xD5A88D,
           moonlightBlue: 0x9BBEEA,
-          pearlWhite: 0xF6F2FF,
-          warmLight: 0xFFF0D5
+          pearlWhite: 0xFFFFFF,
+          warmLight: 0xFFF5E4
         },
         memories: [
           {
@@ -685,7 +692,7 @@
             code: '01',
             title: 'وجودك',
             text: 'هناك أشخاص لا يحتاجون\nإلى فعل شيء استثنائي،\nيكفي وجودهم\nليصبح اليوم أخف.',
-            color: 0xFFF0D5
+            color: 0xFFF5E4
           },
           {
             id: 1,
@@ -772,333 +779,6 @@
         }
       }
 
-      class AudioManager {
-        constructor() {
-          this.ctx = null;
-          this.masterGain = null;
-          this.musicGain = null;
-          this.sfxGain = null;
-          this.reverbSend = null;
-          this.isEnabled = false;
-          this.isInitialized = false;
-          this.songTimer = null;
-          this.stepIndex = 0;
-          this.customAudioEl = null;
-        }
-
-        init() {
-          if (this.isInitialized) return;
-          try {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (!AudioCtx) return;
-            this.ctx = new AudioCtx();
-            this.masterGain = this.ctx.createGain();
-            this.masterGain.gain.value = 0.0001;
-            this.masterGain.connect(this.ctx.destination);
-
-            this.musicGain = this.ctx.createGain();
-            this.musicGain.gain.value = 0.56;
-            this.musicGain.connect(this.masterGain);
-
-            this.sfxGain = this.ctx.createGain();
-            this.sfxGain.gain.value = 0.45;
-            this.sfxGain.connect(this.masterGain);
-
-            const delay = this.ctx.createDelay(1.0);
-            delay.delayTime.value = 0.34;
-            const feedback = this.ctx.createGain();
-            feedback.gain.value = 0.38;
-            const wetFilter = this.ctx.createBiquadFilter();
-            wetFilter.type = 'lowpass';
-            wetFilter.frequency.value = 1650;
-            const wetGain = this.ctx.createGain();
-            wetGain.gain.value = 0.32;
-
-            this.reverbSend = this.ctx.createGain();
-            this.reverbSend.gain.value = 0.5;
-            this.reverbSend.connect(delay);
-            delay.connect(feedback);
-            feedback.connect(wetFilter);
-            wetFilter.connect(delay);
-            wetFilter.connect(wetGain);
-            wetGain.connect(this.musicGain);
-
-            if (CONFIG.customAudioUrl) {
-              this.customAudioEl = new Audio(CONFIG.customAudioUrl);
-              this.customAudioEl.loop = true;
-              this.customAudioEl.volume = 0.7;
-            }
-
-            this.isInitialized = true;
-          } catch (e) {}
-        }
-
-        enable() {
-          this.init();
-          if (!this.ctx) return;
-          if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
-          this.isEnabled = true;
-
-          if (this.customAudioEl) {
-            this.customAudioEl.play().catch(() => {});
-          }
-
-          const now = this.ctx.currentTime;
-          this.masterGain.gain.cancelScheduledValues(now);
-          this.masterGain.gain.setValueAtTime(Math.max(this.masterGain.gain.value, 0.001), now);
-          this.masterGain.gain.exponentialRampToValueAtTime(0.95, now + 1.4);
-          this.startLoveSongLoop();
-          this.updateUI();
-        }
-
-        disable() {
-          this.isEnabled = false;
-          if (this.customAudioEl) {
-            this.customAudioEl.pause();
-          }
-          if (this.ctx && this.masterGain) {
-            const now = this.ctx.currentTime;
-            this.masterGain.gain.cancelScheduledValues(now);
-            this.masterGain.gain.setValueAtTime(Math.max(this.masterGain.gain.value, 0.001), now);
-            this.masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.7);
-          }
-          if (this.songTimer) {
-            clearInterval(this.songTimer);
-            this.songTimer = null;
-          }
-          this.updateUI();
-        }
-
-        toggle() {
-          if (this.isEnabled) this.disable();
-          else {
-            this.enable();
-            this.playSoftClick();
-          }
-        }
-
-        updateUI() {
-          const btn = document.getElementById('sound-toggle');
-          const iconOff = document.getElementById('sound-icon-off');
-          const iconOn = document.getElementById('sound-icon-on');
-          if (!btn) return;
-          btn.classList.toggle('active', this.isEnabled);
-          iconOff.style.display = this.isEnabled ? 'none' : 'block';
-          iconOn.style.display = this.isEnabled ? 'block' : 'none';
-        }
-
-        startLoveSongLoop() {
-          if (this.songTimer || !this.ctx || this.customAudioEl) return;
-
-          const progression = [
-            {
-              bass: 87.31,
-              chord: [174.61, 220.00, 261.63, 329.63, 392.00],
-              notes: [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 523.25, 440.00]
-            },
-            {
-              bass: 82.41,
-              chord: [164.81, 196.00, 246.94, 329.63, 392.00],
-              notes: [493.88, 659.25, 783.99, 739.99, 659.25, 587.33, 493.88, 392.00]
-            },
-            {
-              bass: 73.42,
-              chord: [146.83, 220.00, 261.63, 329.63, 440.00],
-              notes: [440.00, 523.25, 659.25, 783.99, 659.25, 587.33, 523.25, 440.00]
-            },
-            {
-              bass: 65.41,
-              chord: [130.81, 196.00, 246.94, 293.66, 392.00],
-              notes: [523.25, 587.33, 659.25, 587.33, 523.25, 493.88, 440.00, 392.00]
-            }
-          ];
-
-          const playEighthStep = () => {
-            if (!this.isEnabled || !this.ctx) return;
-            const now = this.ctx.currentTime;
-            const barIdx = Math.floor(this.stepIndex / 8) % progression.length;
-            const subStep = this.stepIndex % 8;
-            const bar = progression[barIdx];
-
-            if (subStep === 0) {
-              bar.chord.forEach((freq, idx) => {
-                const osc = this.ctx.createOscillator();
-                const filter = this.ctx.createBiquadFilter();
-                const gain = this.ctx.createGain();
-
-                osc.type = idx < 2 ? 'triangle' : 'sine';
-                osc.frequency.setValueAtTime(freq, now);
-                osc.detune.setValueAtTime((idx - 2) * 4.5, now);
-
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(520, now);
-                filter.frequency.linearRampToValueAtTime(1150, now + 1.8);
-                filter.frequency.linearRampToValueAtTime(620, now + 3.8);
-
-                gain.gain.setValueAtTime(0.0001, now);
-                gain.gain.exponentialRampToValueAtTime(0.045, now + 0.9);
-                gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.9);
-
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(this.musicGain);
-                gain.connect(this.reverbSend);
-
-                osc.start(now);
-                osc.stop(now + 4.0);
-              });
-
-              const bassOsc = this.ctx.createOscillator();
-              const bassGain = this.ctx.createGain();
-              bassOsc.type = 'sine';
-              bassOsc.frequency.setValueAtTime(bar.bass, now);
-              bassGain.gain.setValueAtTime(0.0001, now);
-              bassGain.gain.exponentialRampToValueAtTime(0.11, now + 0.25);
-              bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.6);
-              bassOsc.connect(bassGain);
-              bassGain.connect(this.musicGain);
-              bassOsc.start(now);
-              bassOsc.stop(now + 3.7);
-            }
-
-            if (subStep === 0 || subStep === 4) {
-              this.playSoftPulse(now, subStep === 0 ? 0.065 : 0.04);
-            }
-
-            const noteFreq = bar.notes[subStep];
-            const isAccent = subStep === 0 || subStep === 2 || subStep === 4;
-            this.playPianoNote(noteFreq, now, isAccent ? 0.085 : 0.052, isAccent ? 1.7 : 1.1);
-
-            if (subStep === 4 || subStep === 6) {
-              this.playPianoNote(bar.chord[2], now + 0.05, 0.036, 1.4);
-            }
-
-            this.stepIndex++;
-          };
-
-          playEighthStep();
-          this.songTimer = setInterval(playEighthStep, 470);
-        }
-
-        playSoftPulse(startTime, vol = 0.05) {
-          if (!this.isEnabled || !this.ctx) return;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(58, startTime);
-          osc.frequency.exponentialRampToValueAtTime(34, startTime + 0.16);
-          gain.gain.setValueAtTime(0.0001, startTime);
-          gain.gain.exponentialRampToValueAtTime(vol, startTime + 0.025);
-          gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.2);
-          osc.connect(gain);
-          gain.connect(this.musicGain);
-          osc.start(startTime);
-          osc.stop(startTime + 0.22);
-        }
-
-        playPianoNote(freq, startTime, volume = 0.08, duration = 2.0) {
-          if (!this.isEnabled || !this.ctx) return;
-          const t = startTime || this.ctx.currentTime;
-          const osc = this.ctx.createOscillator();
-          const overtone = this.ctx.createOscillator();
-          const filter = this.ctx.createBiquadFilter();
-          const gain = this.ctx.createGain();
-          const overtoneGain = this.ctx.createGain();
-
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, t);
-
-          overtone.type = 'sine';
-          overtone.frequency.setValueAtTime(freq * 2, t);
-          overtoneGain.gain.setValueAtTime(0.22, t);
-
-          filter.type = 'lowpass';
-          filter.frequency.setValueAtTime(freq * 3.5, t);
-          filter.frequency.exponentialRampToValueAtTime(freq * 1.2, t + duration);
-
-          gain.gain.setValueAtTime(0.0001, t);
-          gain.gain.exponentialRampToValueAtTime(volume, t + 0.025);
-          gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
-
-          overtone.connect(overtoneGain);
-          overtoneGain.connect(filter);
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(this.musicGain);
-          if (this.reverbSend) gain.connect(this.reverbSend);
-
-          osc.start(t);
-          overtone.start(t);
-          osc.stop(t + duration + 0.08);
-          overtone.stop(t + duration + 0.08);
-        }
-
-        playSoftClick() {
-          if (!this.isEnabled || !this.ctx) return;
-          const now = this.ctx.currentTime;
-          this.playPianoNote(523.25, now, 0.07, 1.2);
-          this.playPianoNote(659.25, now + 0.07, 0.05, 1.2);
-        }
-
-        playChime() {
-          if (!this.isEnabled || !this.ctx) return;
-          const now = this.ctx.currentTime;
-          [587.33, 783.99, 987.77].forEach((f, i) => this.playPianoNote(f, now + i * 0.11, 0.06, 2.0));
-        }
-
-        playMemoryOpen() {
-          if (!this.isEnabled || !this.ctx) return;
-          const now = this.ctx.currentTime;
-          [440.00, 554.37, 659.25, 880.00].forEach((f, i) => this.playPianoNote(f, now + i * 0.09, 0.055, 2.1));
-        }
-
-        playPortal() {
-          if (!this.isEnabled || !this.ctx) return;
-          const now = this.ctx.currentTime;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(160, now);
-          osc.frequency.exponentialRampToValueAtTime(520, now + 2.2);
-
-          gain.gain.setValueAtTime(0.0001, now);
-          gain.gain.exponentialRampToValueAtTime(0.11, now + 1.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
-
-          osc.connect(gain);
-          gain.connect(this.sfxGain);
-          osc.start(now);
-          osc.stop(now + 2.6);
-        }
-
-        playHeartbeat() {
-          if (!this.isEnabled || !this.ctx) return;
-          const now = this.ctx.currentTime;
-          [0, 0.22].forEach((offset, idx) => {
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(idx === 0 ? 64 : 52, now + offset);
-            osc.frequency.exponentialRampToValueAtTime(32, now + offset + 0.18);
-
-            gain.gain.setValueAtTime(0.0001, now + offset);
-            gain.gain.exponentialRampToValueAtTime(idx === 0 ? 0.14 : 0.09, now + offset + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.22);
-
-            osc.connect(gain);
-            gain.connect(this.sfxGain);
-            osc.start(now + offset);
-            osc.stop(now + offset + 0.25);
-          });
-        }
-
-        playNameReveal() {
-          if (!this.isEnabled || !this.ctx) return;
-          const now = this.ctx.currentTime;
-          [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((f, i) => this.playPianoNote(f, now + i * 0.18, 0.065, 2.6));
-        }
-      }
-
       class AnimationManager {
         constructor() {
           this.timers = new Set();
@@ -1161,7 +841,7 @@
         }
       }
 
-      function createGlowTexture(innerColor = '#FFF0D5', midColor = '#DFA5C8', outerColor = 'rgba(89, 64, 131, 0)') {
+      function createGlowTexture(innerColor = '#FFF5E4', midColor = '#DFA5C8', outerColor = 'rgba(89, 64, 131, 0)') {
         const canvas = document.createElement('canvas');
         canvas.width = 128;
         canvas.height = 128;
@@ -1185,13 +865,13 @@
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, 512, 128);
 
-        ctx.font = '400 44px "Alexandria", "IBM Plex Sans Arabic", sans-serif';
+        ctx.font = '600 46px "Alexandria", "IBM Plex Sans Arabic", sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
-        ctx.shadowColor = 'rgba(223, 165, 200, 0.85)';
-        ctx.shadowBlur = 18;
-        ctx.fillStyle = '#F6F2FF';
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+        ctx.shadowBlur = 14;
+        ctx.fillStyle = '#FFFFFF';
         ctx.fillText(text, 256, 64);
 
         const tex = new THREE.CanvasTexture(canvas);
@@ -1206,7 +886,7 @@
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, 1024, 256);
 
-        ctx.font = '600 112px "Alexandria", system-ui, sans-serif';
+        ctx.font = '700 116px "Alexandria", system-ui, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
 
@@ -1214,9 +894,9 @@
         const letterSpacing = 128;
         const startX = 512 - ((letters.length - 1) * letterSpacing) / 2;
 
-        ctx.shadowColor = 'rgba(255, 240, 213, 0.85)';
-        ctx.shadowBlur = 22;
-        ctx.fillStyle = '#FFF7EB';
+        ctx.shadowColor = 'rgba(255, 245, 228, 0.9)';
+        ctx.shadowBlur = 24;
+        ctx.fillStyle = '#FFFFFF';
 
         letters.forEach((ch, idx) => {
           ctx.fillText(ch, startX + idx * letterSpacing, 128);
@@ -1246,7 +926,6 @@
         constructor() {
           this.perf = new PerformanceManager();
           this.settings = this.perf.getSettings();
-          this.audio = new AudioManager();
           this.anim = new AnimationManager();
 
           this.state = {
@@ -1285,7 +964,6 @@
             memReaderTitle: document.getElementById('memory-reader-title'),
             memReaderBody: document.getElementById('memory-reader-body'),
             memBackBtn: document.getElementById('memory-back-btn'),
-            soundToggle: document.getElementById('sound-toggle'),
             motionToggle: document.getElementById('motion-toggle')
           };
 
@@ -1313,9 +991,9 @@
           this.camera = new THREE.PerspectiveCamera(this.getResponsiveFOV(), window.innerWidth / window.innerHeight, 0.1, 180);
           this.camera.position.set(0, 0, 18);
 
-          this.glowTex = createGlowTexture('#FFF0D5', '#DFA5C8', 'rgba(89,64,131,0)');
-          this.blueGlowTex = createGlowTexture('#F6F2FF', '#9BBEEA', 'rgba(23,16,43,0)');
-          this.violetGlowTex = createGlowTexture('#F6F2FF', '#A18BEA', 'rgba(23,16,43,0)');
+          this.glowTex = createGlowTexture('#FFF5E4', '#DFA5C8', 'rgba(89,64,131,0)');
+          this.blueGlowTex = createGlowTexture('#FFFFFF', '#9BBEEA', 'rgba(23,16,43,0)');
+          this.violetGlowTex = createGlowTexture('#FFFFFF', '#A18BEA', 'rgba(23,16,43,0)');
 
           this.starGroup = new THREE.Group();
           this.nebulaGroup = new THREE.Group();
@@ -1505,8 +1183,6 @@
           btn.onclick = (e) => {
             if (locked || this.state.isTransitioning) return;
             locked = true;
-            this.audio.enable();
-            this.audio.playSoftClick();
             this.spawnButtonRipple(btn, e);
             btn.classList.add('pressed');
 
@@ -1750,7 +1426,6 @@
 
             this.anim.schedule(() => {
               this.showStoryText('هناك نجمة واحدة\nلفتت انتباهي أكثر من الجميع.');
-              this.audio.playChime();
               this.spawnShootingStar();
             }, 3500);
 
@@ -1769,7 +1444,6 @@
             }, 6400);
 
             this.anim.schedule(() => {
-              this.audio.playChime();
               this.anim.tween({
                 from: 1,
                 to: 2,
@@ -1851,14 +1525,14 @@
             if (idx === 0) {
               const shell = new THREE.Mesh(
                 new THREE.SphereGeometry(0.68, 28, 28),
-                new THREE.MeshBasicMaterial({ color: 0xFFF0D5, transparent: true, opacity: 0.24 })
+                new THREE.MeshBasicMaterial({ color: 0xFFF5E4, transparent: true, opacity: 0.24 })
               );
               const rim = new THREE.Mesh(
                 new THREE.RingGeometry(0.69, 0.73, 48),
-                new THREE.MeshBasicMaterial({ color: 0xFFF0D5, side: THREE.DoubleSide, transparent: true, opacity: 0.6 })
+                new THREE.MeshBasicMaterial({ color: 0xFFF5E4, side: THREE.DoubleSide, transparent: true, opacity: 0.6 })
               );
               const core = new THREE.Sprite(new THREE.SpriteMaterial({
-                map: this.glowTex, color: 0xFFF0D5, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending
+                map: this.glowTex, color: 0xFFF5E4, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending
               }));
               core.scale.set(1.5, 1.5, 1);
               group.add(shell, rim, core);
@@ -1893,7 +1567,7 @@
                 size: 0.15, map: this.violetGlowTex, color: 0xA18BEA, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false
               }));
               const centerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
-                map: this.violetGlowTex, color: 0xF6F2FF, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending
+                map: this.violetGlowTex, color: 0xFFFFFF, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending
               }));
               centerGlow.scale.set(1.15, 1.15, 1);
               group.add(flower, centerGlow);
@@ -1904,7 +1578,7 @@
               );
               const orbit = new THREE.Mesh(
                 new THREE.TorusGeometry(0.78, 0.016, 10, 48),
-                new THREE.MeshBasicMaterial({ color: 0xF6F2FF, transparent: true, opacity: 0.58 })
+                new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.58 })
               );
               orbit.rotation.x = 1.15;
               orbit.rotation.y = 0.35;
@@ -1920,7 +1594,7 @@
               );
               const innerCrystal = new THREE.Mesh(
                 new THREE.OctahedronGeometry(0.36, 0),
-                new THREE.MeshBasicMaterial({ color: 0xFFF0D5, transparent: true, opacity: 0.48 })
+                new THREE.MeshBasicMaterial({ color: 0xFFF5E4, transparent: true, opacity: 0.48 })
               );
               const core = new THREE.Sprite(new THREE.SpriteMaterial({
                 map: this.glowTex, color: 0xD5A88D, transparent: true, opacity: 0.92, blending: THREE.AdditiveBlending
@@ -2009,9 +1683,6 @@
           const targetObj = this.ch2Objects[id];
           if (!mem || !targetObj) return;
 
-          this.audio.enable();
-          this.audio.playMemoryOpen();
-
           this.ch2Objects.forEach((o) => {
             if (o.userData.hotspot) o.userData.hotspot.classList.remove('active');
           });
@@ -2049,7 +1720,6 @@
           if (id === null) return;
           const targetObj = this.ch2Objects[id];
 
-          this.audio.playSoftClick();
           this.dom.memReader.classList.remove('open');
           this.dom.memReader.setAttribute('aria-hidden', 'true');
           this.dom.canvas.classList.remove('is-blurred');
@@ -2080,7 +1750,6 @@
 
         triggerAllMemoriesComplete() {
           this.state.allMemoriesConverged = true;
-          this.audio.playChime();
           this.dom.memNodes.forEach((n) => n.classList.add('converged'));
 
           const radius = 2.1 * this.getResponsiveSceneScale();
@@ -2122,7 +1791,6 @@
           this.updateChapterDots(3);
           this.hideStoryText();
           this.dom.memProgressBar.classList.remove('visible');
-          this.audio.playPortal();
 
           this.clearGroup(this.portalGroup);
           const portalRings = [];
@@ -2202,7 +1870,6 @@
             heartBase[i3 + 1] = hp.y + 0.65;
             heartBase[i3 + 2] = hp.z;
 
-            // نقاط البداية متناثرة حول مدار واسع لتُرسَم وتجتمع تدريجيًا نحو القلب
             const ang = Math.random() * Math.PI * 2;
             const rad = 4.2 + Math.random() * 5.2;
             scatterOrigins[i3] = Math.cos(ang) * rad * scale;
@@ -2213,7 +1880,6 @@
             positions[i3 + 1] = scatterOrigins[i3 + 1];
             positions[i3 + 2] = scatterOrigins[i3 + 2];
 
-            // ترتيب رسم تدريجي حول محيط القلب من الأعلى
             const angleAroundHeart = (Math.atan2(hp.y + 0.65 - 0.65, hp.x) + Math.PI) / (Math.PI * 2);
             drawOrder[i] = angleAroundHeart * 0.65 + Math.random() * 0.35;
 
@@ -2331,7 +1997,6 @@
 
           const sc = this.getResponsiveSceneScale();
 
-          // أنميشن رسم وتشكّل القلب تدريجيًا من النجوم
           this.anim.tween({
             from: 0,
             to: 1,
@@ -2381,7 +2046,6 @@
           this.anim.schedule(() => { this.hideStoryText(); }, 2700);
 
           this.anim.schedule(() => {
-            this.audio.playNameReveal();
             this.ch3Data.nameRevealed = true;
             this.state.chapter3Phase = 'nameRevealed';
             const sc = this.getResponsiveSceneScale();
@@ -2419,7 +2083,6 @@
           });
 
           this.anim.schedule(() => {
-            this.audio.playHeartbeat();
             this.heartbeatPhase = 0.01;
             this.showStoryText('أحبك.', { isClimax: true });
             this.state.chapter3Phase = 'eternal';
@@ -2445,7 +2108,6 @@
         replayExperience() {
           if (this.state.isTransitioning) return;
           this.state.isTransitioning = true;
-          this.audio.playPortal();
 
           this.dom.replayBtn.classList.remove('visible');
           this.dom.gestureHint.classList.remove('visible');
@@ -2674,7 +2336,6 @@
               const i3 = i * 3;
               const ph = phases[i];
 
-              // حساب تقدم رسم كل نقطة حسب ترتيبها ليتشكّل القلب تدريجيًا
               const localP = THREE.MathUtils.clamp((assembleProgress - drawOrder[i] * 0.45) / 0.55, 0, 1);
               const smoothP = localP * localP * (3 - 2 * localP);
 
@@ -2786,8 +2447,6 @@
           window.addEventListener('pointermove', onPointerMove, { passive: true });
           window.addEventListener('pointerup', onPointerUp, { passive: true });
 
-          this.dom.soundToggle.addEventListener('click', () => { this.audio.toggle(); });
-
           this.dom.motionToggle.addEventListener('click', async () => {
             if (this.deviceTilt.enabled) {
               this.deviceTilt.enabled = false;
@@ -2808,7 +2467,6 @@
               });
               this.deviceTilt.enabled = true;
               this.dom.motionToggle.classList.add('active');
-              this.audio.playSoftClick();
             } catch (err) {}
           });
 
