@@ -1,23 +1,2862 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#03040a"><title>إلى قلبك — رحلة عبر ثلاثة عوالم</title>
-<link rel="stylesheet" href="css/main.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#03040A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>إلى قلبك — رحلة عبر ثلاثة عوالم</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600&family=IBM+Plex+Sans+Arabic:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-black: #03040A;
+      --cosmic-navy: #07101D;
+      --midnight-purple: #17102B;
+      --nebula-violet: #594083;
+      --dream-lavender: #A18BEA;
+      --soft-rose: #DFA5C8;
+      --rose-gold: #D5A88D;
+      --moonlight-blue: #9BBEEA;
+      --pearl-white: #F6F2FF;
+      --warm-light: #FFF0D5;
+
+      --safe-top: env(safe-area-inset-top, 16px);
+      --safe-bottom: env(safe-area-inset-bottom, 20px);
+      --safe-left: env(safe-area-inset-left, 16px);
+      --safe-right: env(safe-area-inset-right, 16px);
+
+      --font-display: 'Alexandria', 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+      --font-body: 'IBM Plex Sans Arabic', 'Alexandria', system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 45%, var(--cosmic-navy) 0%, var(--deep-black) 78%);
+      color: var(--pearl-white);
+      font-family: var(--font-body);
+      touch-action: none;
+      position: fixed;
+      inset: 0;
+    }
+
+    #experience-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+      transition: filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #experience-canvas.is-blurred {
+      filter: blur(6px) brightness(0.72);
+    }
+
+    .vignette-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(3, 4, 10, 0.72) 100%),
+        linear-gradient(180deg, rgba(3, 4, 10, 0.55) 0%, transparent 18%, transparent 72%, rgba(3, 4, 10, 0.82) 100%);
+    }
+
+    .top-hud {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(var(--safe-top) + 10px) calc(var(--safe-right) + 18px) 10px calc(var(--safe-left) + 18px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .top-hud.visible {
+      opacity: 1;
+    }
+
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(246, 242, 255, 0.16);
+      background: rgba(7, 16, 29, 0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--pearl-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.94);
+    }
+
+    .icon-btn.active {
+      border-color: rgba(223, 165, 200, 0.48);
+      box-shadow: 0 0 18px rgba(161, 139, 234, 0.22);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chapter-dots {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      direction: ltr;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(3, 4, 10, 0.35);
+      border: 1px solid rgba(246, 242, 255, 0.08);
+    }
+
+    .chapter-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(246, 242, 255, 0.22);
+      transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .chapter-dot.completed {
+      background: rgba(223, 165, 200, 0.65);
+    }
+
+    .chapter-dot.active {
+      width: 9px;
+      height: 9px;
+      background: var(--warm-light);
+      box-shadow: 0 0 12px var(--warm-light), 0 0 24px var(--dream-lavender);
+    }
+
+    .narrative-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: calc(var(--safe-top) + 64px) clamp(20px, 6vw, 48px) calc(var(--safe-bottom) + 22px);
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .chapter-header {
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+      padding: 6px 18px;
+      border-radius: 20px;
+      background: rgba(3, 4, 10, 0.32);
+    }
+
+    .chapter-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .chapter-label {
+      font-family: var(--font-display);
+      font-size: clamp(0.72rem, 2.6vw, 0.85rem);
+      letter-spacing: 0.22em;
+      color: var(--rose-gold);
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    .chapter-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(1.15rem, 4.4vw, 1.55rem);
+      color: var(--pearl-white);
+      text-shadow: 0 2px 18px rgba(3, 4, 10, 0.95);
+    }
+
+    .story-stage {
+      width: 100%;
+      max-width: 540px;
+      min-height: 118px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-top: auto;
+      margin-bottom: clamp(10px, 2.4vh, 20px);
+    }
+
+    .story-line {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.1rem, 4.3vw, 1.55rem);
+      line-height: 1.8;
+      color: var(--pearl-white);
+      text-shadow: 0 2px 24px rgba(3, 4, 10, 0.98), 0 0 36px rgba(89, 64, 131, 0.55);
+      background: radial-gradient(ellipse at center, rgba(3, 4, 10, 0.62) 0%, rgba(3, 4, 10, 0.25) 68%, transparent 100%);
+      border-radius: 24px;
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(14px) scale(0.985);
+      transition:
+        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+      padding: 8px 18px;
+      max-width: 100%;
+    }
+
+    .story-line.active {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0) scale(1);
+    }
+
+    .story-line.exiting {
+      opacity: 0;
+      filter: blur(6px);
+      transform: translateY(-12px) scale(0.99);
+    }
+
+    .story-line.love-climax {
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 500;
+      color: var(--warm-light);
+      text-shadow:
+        0 0 24px rgba(255, 240, 213, 0.85),
+        0 0 54px rgba(223, 165, 200, 0.75),
+        0 4px 20px rgba(3, 4, 10, 0.98);
+    }
+
+    .action-dock {
+      min-height: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      pointer-events: none;
+      width: 100%;
+      z-index: 12;
+    }
+
+    .cinematic-btn {
+      position: relative;
+      min-width: 196px;
+      min-height: 50px;
+      padding: 13px 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 242, 255, 0.28);
+      background: rgba(13, 18, 36, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--pearl-white);
+      font-family: var(--font-display);
+      font-size: clamp(0.95rem, 3.8vw, 1.08rem);
+      font-weight: 400;
+      cursor: pointer;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+      pointer-events: none;
+      box-shadow:
+        0 0 24px rgba(161, 139, 234, 0.16),
+        inset 0 0 16px rgba(255, 240, 213, 0.06);
+      transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    .cinematic-btn.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .cinematic-btn.pressed {
+      transform: scale(0.97) !important;
+      border-color: rgba(255, 240, 213, 0.75);
+      box-shadow:
+        0 0 36px rgba(223, 165, 200, 0.45),
+        inset 0 0 24px rgba(255, 240, 213, 0.2);
+    }
+
+    .cinematic-btn::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 999px;
+      padding: 1px;
+      background: conic-gradient(
+        from var(--btn-angle, 0deg),
+        transparent 0%,
+        transparent 72%,
+        rgba(255, 240, 213, 0.9) 86%,
+        rgba(223, 165, 200, 0.7) 94%,
+        transparent 100%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: spinBorder 4.5s linear infinite;
+      pointer-events: none;
+    }
+
+    @property --btn-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes spinBorder {
+      to { --btn-angle: 360deg; }
+    }
+
+    .btn-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 240, 213, 0.65) 0%, rgba(223, 165, 200, 0.2) 55%, transparent 75%);
+      transform: translate(-50%, -50%) scale(0);
+      animation: rippleExpand 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: none;
+    }
+
+    @keyframes rippleExpand {
+      to {
+        transform: translate(-50%, -50%) scale(4.2);
+        opacity: 0;
+      }
+    }
+
+    .memory-progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: none;
+    }
+
+    .memory-progress-bar.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mem-node {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(223, 165, 200, 0.45);
+      background: rgba(23, 16, 43, 0.5);
+      transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .mem-node.unlocked {
+      background: var(--warm-light);
+      border-color: var(--warm-light);
+      box-shadow: 0 0 12px var(--warm-light), 0 0 22px var(--soft-rose);
+      transform: scale(1.18);
+    }
+
+    .mem-node.converged {
+      box-shadow: 0 0 18px var(--warm-light), 0 0 34px var(--dream-lavender);
+    }
+
+    .memory-hotspots {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .memory-hotspot {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 4px;
+      opacity: 0;
+      transition: opacity 0.55s ease;
+      touch-action: manipulation;
+    }
+
+    .memory-hotspot.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .memory-hotspot-label {
+      position: relative;
+      top: 14px;
+      white-space: nowrap;
+      font-family: var(--font-display);
+      font-size: clamp(0.78rem, 3vw, 0.9rem);
+      font-weight: 400;
+      color: var(--pearl-white);
+      text-shadow: 0 2px 10px rgba(3, 4, 10, 0.95);
+      background: rgba(7, 16, 29, 0.65);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(223, 165, 200, 0.35);
+      transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    }
+
+    .memory-hotspot.opened .memory-hotspot-label {
+      border-color: rgba(255, 240, 213, 0.65);
+      color: var(--warm-light);
+      background: rgba(23, 16, 43, 0.72);
+    }
+
+    .memory-reader {
+      position: fixed;
+      inset: 0;
+      z-index: 25;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(var(--safe-top) + 74px) clamp(24px, 7vw, 56px) calc(var(--safe-bottom) + 34px);
+      background: rgba(3, 4, 10, 0.45);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      text-align: center;
+    }
+
+    .memory-reader.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .memory-reader-title {
+      font-family: var(--font-display);
+      font-size: clamp(0.95rem, 3.6vw, 1.15rem);
+      color: var(--rose-gold);
+      letter-spacing: 0.06em;
+    }
+
+    .memory-reader-body {
+      max-width: 460px;
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(1.2rem, 4.8vw, 1.65rem);
+      line-height: 1.85;
+      color: var(--pearl-white);
+      text-shadow: 0 2px 24px rgba(3, 4, 10, 0.98);
+      margin-top: auto;
+      margin-bottom: 24px;
+      transform: translateY(14px);
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .memory-reader.open .memory-reader-body {
+      transform: translateY(0);
+    }
+
+    .subtle-btn {
+      min-width: 140px;
+      min-height: 46px;
+      padding: 10px 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 242, 255, 0.25);
+      background: rgba(7, 16, 29, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--pearl-white);
+      font-family: var(--font-display);
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      cursor: pointer;
+    }
+
+    .subtle-btn:active {
+      transform: scale(0.96);
+    }
+
+    .replay-btn {
+      min-width: 180px;
+      min-height: 46px;
+      padding: 10px 24px;
+      border-radius: 999px;
+      border: 1px solid rgba(246, 242, 255, 0.2);
+      background: rgba(7, 16, 29, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: rgba(246, 242, 255, 0.9);
+      font-family: var(--font-display);
+      font-size: clamp(0.85rem, 3.3vw, 0.96rem);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 1.4s ease, transform 1s ease;
+    }
+
+    .replay-btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .replay-btn:active {
+      transform: scale(0.96);
+    }
+
+    .gesture-hint {
+      font-size: clamp(0.78rem, 3vw, 0.88rem);
+      color: rgba(246, 242, 255, 0.65);
+      opacity: 0;
+      transition: opacity 0.9s ease;
+    }
+
+    .gesture-hint.visible {
+      opacity: 1;
+    }
+
+    @media (max-height: 540px) {
+      .narrative-layer {
+        padding-top: calc(var(--safe-top) + 48px);
+        padding-bottom: calc(var(--safe-bottom) + 14px);
+      }
+      .story-stage {
+        min-height: 68px;
+        margin-bottom: 8px;
+      }
+      .story-line {
+        font-size: clamp(1rem, 3.2vw, 1.3rem);
+        line-height: 1.5;
+      }
+      .action-dock {
+        min-height: 48px;
+        gap: 8px;
+      }
+      .cinematic-btn {
+        min-height: 44px;
+        padding: 9px 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-<canvas id="world" aria-hidden="true"></canvas>
-<div class="grain" aria-hidden="true"></div>
-<div class="top-ui">
-  <div class="chapter-dots" aria-label="مراحل الرحلة"><i data-dot="1"></i><i data-dot="2"></i><i data-dot="3"></i></div>
-  <button id="soundToggle" class="icon-btn" aria-label="تشغيل أو إيقاف الصوت"><span class="sound-bars"><b></b><b></b><b></b><b></b></span></button>
-</div>
-<div id="copy" class="copy" aria-live="polite"></div>
-<div id="actions" class="actions"></div>
-<div id="memoryPanel" class="memory-panel" aria-hidden="true">
-  <div class="memory-heading" id="memoryTitle"></div><div class="memory-message" id="memoryMessage"></div>
-  <button id="memoryBack" class="glass-btn">العودة إلى العالم</button>
-</div>
-<div id="toast" class="toast"></div>
-<script src="js/config.js"></script><script src="js/main.js"></script>
-</body></html>
+
+  <canvas id="experience-canvas" aria-label="مشهد تفاعلي ثلاثي الأبعاد"></canvas>
+  <div class="vignette-layer" aria-hidden="true"></div>
+
+  <header class="top-hud" id="top-hud">
+    <div class="chapter-dots" id="chapter-dots" role="status" aria-label="مؤشر الفصول">
+      <span class="chapter-dot active" data-chapter="1"></span>
+      <span class="chapter-dot" data-chapter="2"></span>
+      <span class="chapter-dot" data-chapter="3"></span>
+    </div>
+
+    <div class="hud-controls">
+      <button type="button" class="icon-btn" id="motion-toggle" aria-label="تفعيل استشعار الحركة">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"></path>
+        </svg>
+      </button>
+      <button type="button" class="icon-btn" id="sound-toggle" aria-label="تشغيل أو إيقاف الصوت">
+        <svg id="sound-icon-off" viewBox="0 0 24 24">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <svg id="sound-icon-on" viewBox="0 0 24 24" style="display:none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="narrative-layer" id="narrative-layer">
+    <div class="chapter-header" id="chapter-header">
+      <div class="chapter-label" id="chapter-label">الفصل الأول</div>
+      <h1 class="chapter-title" id="chapter-title">رسالة من بين النجوم</h1>
+    </div>
+
+    <div class="story-stage" aria-live="polite">
+      <p class="story-line" id="story-line"></p>
+    </div>
+
+    <div class="action-dock" id="action-dock">
+      <div class="memory-progress-bar" id="memory-progress-bar" aria-label="تقدم الذكريات">
+        <span class="mem-node" data-mem="0"></span>
+        <span class="mem-node" data-mem="1"></span>
+        <span class="mem-node" data-mem="2"></span>
+        <span class="mem-node" data-mem="3"></span>
+        <span class="mem-node" data-mem="4"></span>
+      </div>
+
+      <p class="gesture-hint" id="gesture-hint"></p>
+
+      <button type="button" class="cinematic-btn" id="primary-btn">ابدئي الرحلة</button>
+      <button type="button" class="replay-btn" id="replay-btn">أعيد الرحلة من البداية</button>
+    </div>
+  </main>
+
+  <div class="memory-hotspots" id="memory-hotspots" aria-label="عناصر الذكريات"></div>
+
+  <section class="memory-reader" id="memory-reader" aria-hidden="true">
+    <div class="memory-reader-title" id="memory-reader-title"></div>
+    <p class="memory-reader-body" id="memory-reader-body"></p>
+    <button type="button" class="subtle-btn" id="memory-back-btn">العودة</button>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const CONFIG = {
+        recipientName: 'LINA',
+        customAudioUrl: '',
+        palette: {
+          deepBlack: 0x03040A,
+          cosmicNavy: 0x07101D,
+          midnightPurple: 0x17102B,
+          nebulaViolet: 0x594083,
+          dreamLavender: 0xA18BEA,
+          softRose: 0xDFA5C8,
+          roseGold: 0xD5A88D,
+          moonlightBlue: 0x9BBEEA,
+          pearlWhite: 0xF6F2FF,
+          warmLight: 0xFFF0D5
+        },
+        memories: [
+          {
+            id: 0,
+            code: '01',
+            title: 'وجودك',
+            text: 'هناك أشخاص لا يحتاجون\nإلى فعل شيء استثنائي،\nيكفي وجودهم\nليصبح اليوم أخف.',
+            color: 0xFFF0D5
+          },
+          {
+            id: 1,
+            code: '02',
+            title: 'ضحكتك',
+            text: 'بعض الأصوات\nقادرة على تغيير شعور يوم كامل،\nحتى من دون أن تعرف كيف فعلت ذلك.',
+            color: 0xDFA5C8
+          },
+          {
+            id: 2,
+            code: '03',
+            title: 'تفاصيلك',
+            text: 'أحيانًا تكون الأشياء الصغيرة\nهي أكثر ما يبقى في الذاكرة.',
+            color: 0xA18BEA
+          },
+          {
+            id: 3,
+            code: '04',
+            title: 'اللحظات الهادئة',
+            text: 'ليست كل اللحظات الجميلة\nبحاجة إلى كلمات،\nبعضها يكفي\nأن يُعاش بهدوء.',
+            color: 0x9BBEEA
+          },
+          {
+            id: 4,
+            code: '05',
+            title: 'شيء أردت قوله',
+            text: 'قد لا أجد الكلمات المناسبة\nفي كل مرة،\nلكن هذا لا يعني\nأن التفاصيل الجميلة\nتمر من دون أن ألاحظها.',
+            color: 0xD5A88D
+          }
+        ],
+        orbitalLoveWords: [
+          'أحبك',
+          'I love you',
+          "Je t'aime",
+          'Te amo',
+          'Ti amo',
+          '愛してる',
+          '사랑해',
+          'Seni seviyorum',
+          'Ich liebe dich',
+          'Eu te amo'
+        ]
+      };
+
+      class PerformanceManager {
+        constructor() {
+          this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+          this.reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          this.tier = this.detectTier();
+          this.fpsHistory = [];
+        }
+
+        detectTier() {
+          const cores = navigator.hardwareConcurrency || 4;
+          const mem = navigator.deviceMemory || 4;
+          if (this.reducedMotion) return 'LOW';
+          if (this.isMobile) {
+            if (cores <= 4 && mem <= 3) return 'LOW';
+            if (cores <= 6 || mem <= 4) return 'MEDIUM';
+            return 'HIGH';
+          }
+          return cores >= 4 ? 'HIGH' : 'MEDIUM';
+        }
+
+        getSettings() {
+          if (this.tier === 'LOW') {
+            return { dpr: 1, starCount: 850, heartParticles: 1700, dustParticles: 180, orbParticles: 70, orbitalWordCount: 6 };
+          }
+          if (this.tier === 'MEDIUM') {
+            return { dpr: Math.min(window.devicePixelRatio || 1, 1.5), starCount: 1500, heartParticles: 2700, dustParticles: 300, orbParticles: 120, orbitalWordCount: 8 };
+          }
+          return { dpr: Math.min(window.devicePixelRatio || 1, 2), starCount: 2400, heartParticles: 3900, dustParticles: 450, orbParticles: 170, orbitalWordCount: 10 };
+        }
+
+        recordFrame(dt) {
+          if (dt <= 0 || dt > 0.25) return;
+          this.fpsHistory.push(1 / dt);
+          if (this.fpsHistory.length > 90) {
+            const avg = this.fpsHistory.reduce((a, b) => a + b, 0) / this.fpsHistory.length;
+            this.fpsHistory = [];
+            if (avg < 26 && this.tier === 'HIGH') this.tier = 'MEDIUM';
+            else if (avg < 22 && this.tier === 'MEDIUM') this.tier = 'LOW';
+          }
+        }
+      }
+
+      class AudioManager {
+        constructor() {
+          this.ctx = null;
+          this.masterGain = null;
+          this.musicGain = null;
+          this.sfxGain = null;
+          this.reverbSend = null;
+          this.isEnabled = false;
+          this.isInitialized = false;
+          this.songTimer = null;
+          this.stepIndex = 0;
+          this.customAudioEl = null;
+        }
+
+        init() {
+          if (this.isInitialized) return;
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            this.ctx = new AudioCtx();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = 0.0001;
+            this.masterGain.connect(this.ctx.destination);
+
+            this.musicGain = this.ctx.createGain();
+            this.musicGain.gain.value = 0.56;
+            this.musicGain.connect(this.masterGain);
+
+            this.sfxGain = this.ctx.createGain();
+            this.sfxGain.gain.value = 0.45;
+            this.sfxGain.connect(this.masterGain);
+
+            const delay = this.ctx.createDelay(1.0);
+            delay.delayTime.value = 0.34;
+            const feedback = this.ctx.createGain();
+            feedback.gain.value = 0.38;
+            const wetFilter = this.ctx.createBiquadFilter();
+            wetFilter.type = 'lowpass';
+            wetFilter.frequency.value = 1650;
+            const wetGain = this.ctx.createGain();
+            wetGain.gain.value = 0.32;
+
+            this.reverbSend = this.ctx.createGain();
+            this.reverbSend.gain.value = 0.5;
+            this.reverbSend.connect(delay);
+            delay.connect(feedback);
+            feedback.connect(wetFilter);
+            wetFilter.connect(delay);
+            wetFilter.connect(wetGain);
+            wetGain.connect(this.musicGain);
+
+            if (CONFIG.customAudioUrl) {
+              this.customAudioEl = new Audio(CONFIG.customAudioUrl);
+              this.customAudioEl.loop = true;
+              this.customAudioEl.volume = 0.7;
+            }
+
+            this.isInitialized = true;
+          } catch (e) {}
+        }
+
+        enable() {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+          this.isEnabled = true;
+
+          if (this.customAudioEl) {
+            this.customAudioEl.play().catch(() => {});
+          }
+
+          const now = this.ctx.currentTime;
+          this.masterGain.gain.cancelScheduledValues(now);
+          this.masterGain.gain.setValueAtTime(Math.max(this.masterGain.gain.value, 0.001), now);
+          this.masterGain.gain.exponentialRampToValueAtTime(0.95, now + 1.4);
+          this.startLoveSongLoop();
+          this.updateUI();
+        }
+
+        disable() {
+          this.isEnabled = false;
+          if (this.customAudioEl) {
+            this.customAudioEl.pause();
+          }
+          if (this.ctx && this.masterGain) {
+            const now = this.ctx.currentTime;
+            this.masterGain.gain.cancelScheduledValues(now);
+            this.masterGain.gain.setValueAtTime(Math.max(this.masterGain.gain.value, 0.001), now);
+            this.masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.7);
+          }
+          if (this.songTimer) {
+            clearInterval(this.songTimer);
+            this.songTimer = null;
+          }
+          this.updateUI();
+        }
+
+        toggle() {
+          if (this.isEnabled) this.disable();
+          else {
+            this.enable();
+            this.playSoftClick();
+          }
+        }
+
+        updateUI() {
+          const btn = document.getElementById('sound-toggle');
+          const iconOff = document.getElementById('sound-icon-off');
+          const iconOn = document.getElementById('sound-icon-on');
+          if (!btn) return;
+          btn.classList.toggle('active', this.isEnabled);
+          iconOff.style.display = this.isEnabled ? 'none' : 'block';
+          iconOn.style.display = this.isEnabled ? 'block' : 'none';
+        }
+
+        startLoveSongLoop() {
+          if (this.songTimer || !this.ctx || this.customAudioEl) return;
+
+          const progression = [
+            {
+              bass: 87.31,
+              chord: [174.61, 220.00, 261.63, 329.63, 392.00],
+              notes: [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 523.25, 440.00]
+            },
+            {
+              bass: 82.41,
+              chord: [164.81, 196.00, 246.94, 329.63, 392.00],
+              notes: [493.88, 659.25, 783.99, 739.99, 659.25, 587.33, 493.88, 392.00]
+            },
+            {
+              bass: 73.42,
+              chord: [146.83, 220.00, 261.63, 329.63, 440.00],
+              notes: [440.00, 523.25, 659.25, 783.99, 659.25, 587.33, 523.25, 440.00]
+            },
+            {
+              bass: 65.41,
+              chord: [130.81, 196.00, 246.94, 293.66, 392.00],
+              notes: [523.25, 587.33, 659.25, 587.33, 523.25, 493.88, 440.00, 392.00]
+            }
+          ];
+
+          const playEighthStep = () => {
+            if (!this.isEnabled || !this.ctx) return;
+            const now = this.ctx.currentTime;
+            const barIdx = Math.floor(this.stepIndex / 8) % progression.length;
+            const subStep = this.stepIndex % 8;
+            const bar = progression[barIdx];
+
+            if (subStep === 0) {
+              bar.chord.forEach((freq, idx) => {
+                const osc = this.ctx.createOscillator();
+                const filter = this.ctx.createBiquadFilter();
+                const gain = this.ctx.createGain();
+
+                osc.type = idx < 2 ? 'triangle' : 'sine';
+                osc.frequency.setValueAtTime(freq, now);
+                osc.detune.setValueAtTime((idx - 2) * 4.5, now);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(520, now);
+                filter.frequency.linearRampToValueAtTime(1150, now + 1.8);
+                filter.frequency.linearRampToValueAtTime(620, now + 3.8);
+
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(0.045, now + 0.9);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.9);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(this.musicGain);
+                gain.connect(this.reverbSend);
+
+                osc.start(now);
+                osc.stop(now + 4.0);
+              });
+
+              const bassOsc = this.ctx.createOscillator();
+              const bassGain = this.ctx.createGain();
+              bassOsc.type = 'sine';
+              bassOsc.frequency.setValueAtTime(bar.bass, now);
+              bassGain.gain.setValueAtTime(0.0001, now);
+              bassGain.gain.exponentialRampToValueAtTime(0.11, now + 0.25);
+              bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.6);
+              bassOsc.connect(bassGain);
+              bassGain.connect(this.musicGain);
+              bassOsc.start(now);
+              bassOsc.stop(now + 3.7);
+            }
+
+            if (subStep === 0 || subStep === 4) {
+              this.playSoftPulse(now, subStep === 0 ? 0.065 : 0.04);
+            }
+
+            const noteFreq = bar.notes[subStep];
+            const isAccent = subStep === 0 || subStep === 2 || subStep === 4;
+            this.playPianoNote(noteFreq, now, isAccent ? 0.085 : 0.052, isAccent ? 1.7 : 1.1);
+
+            if (subStep === 4 || subStep === 6) {
+              this.playPianoNote(bar.chord[2], now + 0.05, 0.036, 1.4);
+            }
+
+            this.stepIndex++;
+          };
+
+          playEighthStep();
+          this.songTimer = setInterval(playEighthStep, 470);
+        }
+
+        playSoftPulse(startTime, vol = 0.05) {
+          if (!this.isEnabled || !this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(58, startTime);
+          osc.frequency.exponentialRampToValueAtTime(34, startTime + 0.16);
+          gain.gain.setValueAtTime(0.0001, startTime);
+          gain.gain.exponentialRampToValueAtTime(vol, startTime + 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.2);
+          osc.connect(gain);
+          gain.connect(this.musicGain);
+          osc.start(startTime);
+          osc.stop(startTime + 0.22);
+        }
+
+        playPianoNote(freq, startTime, volume = 0.08, duration = 2.0) {
+          if (!this.isEnabled || !this.ctx) return;
+          const t = startTime || this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const overtone = this.ctx.createOscillator();
+          const filter = this.ctx.createBiquadFilter();
+          const gain = this.ctx.createGain();
+          const overtoneGain = this.ctx.createGain();
+
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, t);
+
+          overtone.type = 'sine';
+          overtone.frequency.setValueAtTime(freq * 2, t);
+          overtoneGain.gain.setValueAtTime(0.22, t);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(freq * 3.5, t);
+          filter.frequency.exponentialRampToValueAtTime(freq * 1.2, t + duration);
+
+          gain.gain.setValueAtTime(0.0001, t);
+          gain.gain.exponentialRampToValueAtTime(volume, t + 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+
+          overtone.connect(overtoneGain);
+          overtoneGain.connect(filter);
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(this.musicGain);
+          if (this.reverbSend) gain.connect(this.reverbSend);
+
+          osc.start(t);
+          overtone.start(t);
+          osc.stop(t + duration + 0.08);
+          overtone.stop(t + duration + 0.08);
+        }
+
+        playSoftClick() {
+          if (!this.isEnabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          this.playPianoNote(523.25, now, 0.07, 1.2);
+          this.playPianoNote(659.25, now + 0.07, 0.05, 1.2);
+        }
+
+        playChime() {
+          if (!this.isEnabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          [587.33, 783.99, 987.77].forEach((f, i) => this.playPianoNote(f, now + i * 0.11, 0.06, 2.0));
+        }
+
+        playMemoryOpen() {
+          if (!this.isEnabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          [440.00, 554.37, 659.25, 880.00].forEach((f, i) => this.playPianoNote(f, now + i * 0.09, 0.055, 2.1));
+        }
+
+        playPortal() {
+          if (!this.isEnabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(160, now);
+          osc.frequency.exponentialRampToValueAtTime(520, now + 2.2);
+
+          gain.gain.setValueAtTime(0.0001, now);
+          gain.gain.exponentialRampToValueAtTime(0.11, now + 1.1);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+
+          osc.connect(gain);
+          gain.connect(this.sfxGain);
+          osc.start(now);
+          osc.stop(now + 2.6);
+        }
+
+        playHeartbeat() {
+          if (!this.isEnabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          [0, 0.22].forEach((offset, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(idx === 0 ? 64 : 52, now + offset);
+            osc.frequency.exponentialRampToValueAtTime(32, now + offset + 0.18);
+
+            gain.gain.setValueAtTime(0.0001, now + offset);
+            gain.gain.exponentialRampToValueAtTime(idx === 0 ? 0.14 : 0.09, now + offset + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.22);
+
+            osc.connect(gain);
+            gain.connect(this.sfxGain);
+            osc.start(now + offset);
+            osc.stop(now + offset + 0.25);
+          });
+        }
+
+        playNameReveal() {
+          if (!this.isEnabled || !this.ctx) return;
+          const now = this.ctx.currentTime;
+          [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((f, i) => this.playPianoNote(f, now + i * 0.18, 0.065, 2.6));
+        }
+      }
+
+      class AnimationManager {
+        constructor() {
+          this.timers = new Set();
+          this.tweens = [];
+        }
+
+        schedule(fn, delayMs) {
+          const id = setTimeout(() => {
+            this.timers.delete(id);
+            fn();
+          }, delayMs);
+          this.timers.add(id);
+          return id;
+        }
+
+        tween({ from, to, duration, ease = 'easeInOutCubic', onUpdate, onComplete }) {
+          const obj = { from, to, duration: Math.max(duration, 0.001), elapsed: 0, ease, onUpdate, onComplete, cancelled: false };
+          this.tweens.push(obj);
+          return obj;
+        }
+
+        update(dt) {
+          for (let i = this.tweens.length - 1; i >= 0; i--) {
+            const t = this.tweens[i];
+            if (t.cancelled) {
+              this.tweens.splice(i, 1);
+              continue;
+            }
+            t.elapsed += dt;
+            const rawP = Math.min(t.elapsed / t.duration, 1);
+            const p = this.applyEase(rawP, t.ease);
+            const val = t.from + (t.to - t.from) * p;
+            if (t.onUpdate) t.onUpdate(val, p);
+            if (rawP >= 1) {
+              this.tweens.splice(i, 1);
+              if (t.onComplete) t.onComplete();
+            }
+          }
+        }
+
+        applyEase(t, type) {
+          switch (type) {
+            case 'linear': return t;
+            case 'easeOutCubic': return 1 - Math.pow(1 - t, 3);
+            case 'easeInCubic': return t * t * t;
+            case 'easeOutQuart': return 1 - Math.pow(1 - t, 4);
+            case 'easeInOutQuint':
+              return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.pow(-2 * t + 2, 5) / 2;
+            case 'easeInOutCubic':
+            default:
+              return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          }
+        }
+
+        clearAll() {
+          this.timers.forEach((id) => clearTimeout(id));
+          this.timers.clear();
+          this.tweens.forEach((t) => { t.cancelled = true; });
+          this.tweens = [];
+        }
+      }
+
+      function createGlowTexture(innerColor = '#FFF0D5', midColor = '#DFA5C8', outerColor = 'rgba(89, 64, 131, 0)') {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+        grad.addColorStop(0.0, '#FFFFFF');
+        grad.addColorStop(0.18, innerColor);
+        grad.addColorStop(0.45, midColor);
+        grad.addColorStop(1.0, outerColor);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 128, 128);
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.needsUpdate = true;
+        return tex;
+      }
+
+      function createOrbitalWordTexture(text) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, 512, 128);
+
+        ctx.font = '400 44px "Alexandria", "IBM Plex Sans Arabic", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.shadowColor = 'rgba(223, 165, 200, 0.85)';
+        ctx.shadowBlur = 18;
+        ctx.fillStyle = '#F6F2FF';
+        ctx.fillText(text, 256, 64);
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.needsUpdate = true;
+        return tex;
+      }
+
+      function createCrispNameTexture(name) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1024;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, 1024, 256);
+
+        ctx.font = '600 112px "Alexandria", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        const letters = name.split('');
+        const letterSpacing = 128;
+        const startX = 512 - ((letters.length - 1) * letterSpacing) / 2;
+
+        ctx.shadowColor = 'rgba(255, 240, 213, 0.85)';
+        ctx.shadowBlur = 22;
+        ctx.fillStyle = '#FFF7EB';
+
+        letters.forEach((ch, idx) => {
+          ctx.fillText(ch, startX + idx * letterSpacing, 128);
+        });
+
+        const tex = new THREE.CanvasTexture(canvas);
+        tex.needsUpdate = true;
+        return tex;
+      }
+
+      function sampleHeartPoint(scale = 1.0, shellOnly = true) {
+        const t = Math.random() * Math.PI * 2;
+        const x0 = 16 * Math.pow(Math.sin(t), 3);
+        const y0 = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+
+        const r = shellOnly ? (0.94 + Math.random() * 0.06) : (0.78 + Math.random() * 0.16);
+        const zBand = (Math.random() - 0.5) * 0.75 * r;
+
+        return {
+          x: (x0 * r) * 0.155 * scale,
+          y: (y0 * r + 1.4) * 0.155 * scale,
+          z: zBand * scale
+        };
+      }
+
+      class CinematicLoveExperience {
+        constructor() {
+          this.perf = new PerformanceManager();
+          this.settings = this.perf.getSettings();
+          this.audio = new AudioManager();
+          this.anim = new AnimationManager();
+
+          this.state = {
+            chapter: 0,
+            isTransitioning: false,
+            openedMemories: new Set(),
+            activeMemoryId: null,
+            allMemoriesConverged: false,
+            chapter3Phase: 'idle'
+          };
+
+          this.pointer = { x: 0, y: 0, targetX: 0, targetY: 0, isDown: false, startX: 0, startY: 0 };
+          this.deviceTilt = { enabled: false, x: 0, y: 0 };
+          this.raycaster = new THREE.Raycaster();
+          this.textTimer = null;
+
+          this.clock = new THREE.Clock();
+          this.elapsed = 0;
+          this.heartbeatPhase = 0;
+
+          this.dom = {
+            canvas: document.getElementById('experience-canvas'),
+            topHud: document.getElementById('top-hud'),
+            chapterDots: document.querySelectorAll('.chapter-dot'),
+            chapterHeader: document.getElementById('chapter-header'),
+            chapterLabel: document.getElementById('chapter-label'),
+            chapterTitle: document.getElementById('chapter-title'),
+            storyLine: document.getElementById('story-line'),
+            primaryBtn: document.getElementById('primary-btn'),
+            replayBtn: document.getElementById('replay-btn'),
+            gestureHint: document.getElementById('gesture-hint'),
+            memProgressBar: document.getElementById('memory-progress-bar'),
+            memNodes: document.querySelectorAll('.mem-node'),
+            memHotspots: document.getElementById('memory-hotspots'),
+            memReader: document.getElementById('memory-reader'),
+            memReaderTitle: document.getElementById('memory-reader-title'),
+            memReaderBody: document.getElementById('memory-reader-body'),
+            memBackBtn: document.getElementById('memory-back-btn'),
+            soundToggle: document.getElementById('sound-toggle'),
+            motionToggle: document.getElementById('motion-toggle')
+          };
+
+          this.initThree();
+          this.initSharedEnvironment();
+          this.bindEvents();
+          this.startIntroSequence();
+          this.animate();
+        }
+
+        initThree() {
+          this.renderer = new THREE.WebGLRenderer({
+            canvas: this.dom.canvas,
+            antialias: this.perf.tier !== 'LOW',
+            alpha: true,
+            powerPreference: 'high-performance'
+          });
+          this.renderer.setPixelRatio(this.settings.dpr);
+          this.renderer.setSize(window.innerWidth, window.innerHeight);
+          this.renderer.setClearColor(CONFIG.palette.deepBlack, 1);
+
+          this.scene = new THREE.Scene();
+          this.scene.fog = new THREE.FogExp2(CONFIG.palette.deepBlack, 0.022);
+
+          this.camera = new THREE.PerspectiveCamera(this.getResponsiveFOV(), window.innerWidth / window.innerHeight, 0.1, 180);
+          this.camera.position.set(0, 0, 18);
+
+          this.glowTex = createGlowTexture('#FFF0D5', '#DFA5C8', 'rgba(89,64,131,0)');
+          this.blueGlowTex = createGlowTexture('#F6F2FF', '#9BBEEA', 'rgba(23,16,43,0)');
+          this.violetGlowTex = createGlowTexture('#F6F2FF', '#A18BEA', 'rgba(23,16,43,0)');
+
+          this.starGroup = new THREE.Group();
+          this.nebulaGroup = new THREE.Group();
+          this.chapter1Group = new THREE.Group();
+          this.chapter2Group = new THREE.Group();
+          this.chapter3Group = new THREE.Group();
+          this.portalGroup = new THREE.Group();
+          this.fxGroup = new THREE.Group();
+
+          this.scene.add(this.nebulaGroup, this.starGroup, this.chapter1Group, this.chapter2Group, this.chapter3Group, this.portalGroup, this.fxGroup);
+        }
+
+        getResponsiveFOV() {
+          const aspect = window.innerWidth / window.innerHeight;
+          if (aspect < 0.6) return 62;
+          if (aspect < 0.8) return 56;
+          return 48;
+        }
+
+        getResponsiveSceneScale() {
+          const aspect = window.innerWidth / window.innerHeight;
+          if (aspect < 0.55) return 0.78;
+          if (aspect < 0.75) return 0.88;
+          if (aspect > 1.3) return 0.94;
+          return 1.0;
+        }
+
+        initSharedEnvironment() {
+          const count = this.settings.starCount;
+          const positions = new Float32Array(count * 3);
+          const colors = new Float32Array(count * 3);
+
+          const starPalette = [
+            new THREE.Color(CONFIG.palette.pearlWhite),
+            new THREE.Color(CONFIG.palette.warmLight),
+            new THREE.Color(CONFIG.palette.moonlightBlue),
+            new THREE.Color(CONFIG.palette.dreamLavender),
+            new THREE.Color(CONFIG.palette.softRose)
+          ];
+
+          for (let i = 0; i < count; i++) {
+            const i3 = i * 3;
+            const radius = 14 + Math.random() * 68;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+
+            positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i3 + 2] = -10 + (Math.random() - 0.5) * 95;
+
+            const c = starPalette[i % starPalette.length];
+            colors[i3] = c.r;
+            colors[i3 + 1] = c.g;
+            colors[i3 + 2] = c.b;
+          }
+
+          const starGeo = new THREE.BufferGeometry();
+          starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+          starGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+          this.starMat = new THREE.PointsMaterial({
+            size: 0.25,
+            map: this.glowTex,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.0,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          });
+
+          this.starField = new THREE.Points(starGeo, this.starMat);
+          this.starGroup.add(this.starField);
+
+          const dustCount = this.settings.dustParticles;
+          const dustPos = new Float32Array(dustCount * 3);
+          for (let i = 0; i < dustCount; i++) {
+            dustPos[i * 3] = (Math.random() - 0.5) * 26;
+            dustPos[i * 3 + 1] = (Math.random() - 0.5) * 26;
+            dustPos[i * 3 + 2] = (Math.random() - 0.5) * 24;
+          }
+          const dustGeo = new THREE.BufferGeometry();
+          dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+          this.dustMat = new THREE.PointsMaterial({
+            size: 0.15,
+            map: this.violetGlowTex,
+            color: CONFIG.palette.dreamLavender,
+            transparent: true,
+            opacity: 0.0,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          });
+          this.dustField = new THREE.Points(dustGeo, this.dustMat);
+          this.starGroup.add(this.dustField);
+
+          this.nebulaSprites = [];
+          const nebulaConfigs = [
+            { pos: [-5, 3, -24], scale: 28, tex: this.violetGlowTex, opacity: 0.22 },
+            { pos: [6, -4, -28], scale: 32, tex: this.glowTex, opacity: 0.18 },
+            { pos: [0, 0, -34], scale: 38, tex: this.blueGlowTex, opacity: 0.16 }
+          ];
+
+          nebulaConfigs.forEach((cfg) => {
+            const mat = new THREE.SpriteMaterial({
+              map: cfg.tex,
+              transparent: true,
+              opacity: 0.0,
+              depthWrite: false,
+              blending: THREE.AdditiveBlending
+            });
+            const sprite = new THREE.Sprite(mat);
+            sprite.position.set(...cfg.pos);
+            sprite.scale.set(cfg.scale, cfg.scale, 1);
+            sprite.userData.targetOpacity = cfg.opacity;
+            this.nebulaGroup.add(sprite);
+            this.nebulaSprites.push(sprite);
+          });
+
+          const breathMat = new THREE.SpriteMaterial({
+            map: this.glowTex,
+            color: CONFIG.palette.warmLight,
+            transparent: true,
+            opacity: 0.0,
+            blending: THREE.AdditiveBlending
+          });
+          this.firstBreathLight = new THREE.Sprite(breathMat);
+          this.firstBreathLight.position.set(0, 0.3, 0);
+          this.firstBreathLight.scale.set(0.4, 0.4, 1);
+          this.fxGroup.add(this.firstBreathLight);
+        }
+
+        showStoryText(text, { isClimax = false } = {}) {
+          if (this.textTimer) {
+            clearTimeout(this.textTimer);
+            this.textTimer = null;
+          }
+          const el = this.dom.storyLine;
+          el.classList.remove('active', 'love-climax');
+          el.classList.add('exiting');
+
+          this.textTimer = setTimeout(() => {
+            el.classList.remove('exiting');
+            el.innerHTML = text.replace(/\n/g, '<br>');
+            if (isClimax) el.classList.add('love-climax');
+            void el.offsetWidth;
+            el.classList.add('active');
+            this.textTimer = null;
+          }, 240);
+        }
+
+        hideStoryText() {
+          if (this.textTimer) {
+            clearTimeout(this.textTimer);
+            this.textTimer = null;
+          }
+          const el = this.dom.storyLine;
+          if (!el.classList.contains('active')) return;
+          el.classList.remove('active');
+          el.classList.add('exiting');
+        }
+
+        setChapterHeader(label, title) {
+          this.dom.chapterLabel.textContent = label;
+          this.dom.chapterTitle.textContent = title;
+          this.dom.chapterHeader.classList.add('visible');
+        }
+
+        hideChapterHeader() {
+          this.dom.chapterHeader.classList.remove('visible');
+        }
+
+        updateChapterDots(activeChapter) {
+          this.dom.chapterDots.forEach((dot) => {
+            const ch = Number(dot.dataset.chapter);
+            dot.classList.remove('active', 'completed');
+            if (ch === activeChapter) dot.classList.add('active');
+            else if (ch < activeChapter) dot.classList.add('completed');
+          });
+        }
+
+        showPrimaryButton(label, onClick) {
+          const btn = this.dom.primaryBtn;
+          btn.textContent = label;
+          btn.classList.remove('pressed');
+          btn.onclick = null;
+
+          let locked = false;
+          btn.onclick = (e) => {
+            if (locked || this.state.isTransitioning) return;
+            locked = true;
+            this.audio.enable();
+            this.audio.playSoftClick();
+            this.spawnButtonRipple(btn, e);
+            btn.classList.add('pressed');
+
+            this.anim.schedule(() => {
+              btn.classList.remove('visible');
+              onClick();
+            }, 450);
+          };
+
+          btn.classList.add('visible');
+        }
+
+        hidePrimaryButton() {
+          this.dom.primaryBtn.classList.remove('visible', 'pressed');
+          this.dom.primaryBtn.onclick = null;
+        }
+
+        spawnButtonRipple(btn, event) {
+          const rect = btn.getBoundingClientRect();
+          const x = (event && event.clientX ? event.clientX - rect.left : rect.width / 2);
+          const y = (event && event.clientY ? event.clientY - rect.top : rect.height / 2);
+          const ripple = document.createElement('span');
+          ripple.className = 'btn-ripple';
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+          ripple.style.width = `${Math.max(rect.width, rect.height)}px`;
+          ripple.style.height = `${Math.max(rect.width, rect.height)}px`;
+          btn.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 900);
+        }
+
+        startIntroSequence() {
+          this.anim.clearAll();
+          this.state.chapter = 0;
+          this.state.isTransitioning = false;
+
+          this.dom.topHud.classList.remove('visible');
+          this.hideChapterHeader();
+          this.hideStoryText();
+          this.hidePrimaryButton();
+          this.dom.replayBtn.classList.remove('visible');
+          this.dom.memProgressBar.classList.remove('visible');
+          this.dom.gestureHint.classList.remove('visible');
+
+          this.camera.position.set(0, 0, 18);
+          this.camera.lookAt(0, 0, 0);
+          this.firstBreathLight.visible = true;
+          this.firstBreathLight.material.opacity = 0;
+          this.firstBreathLight.scale.set(0.3, 0.3, 1);
+
+          this.anim.tween({
+            from: 0,
+            to: 0.95,
+            duration: 1.8,
+            ease: 'easeOutCubic',
+            onUpdate: (v) => {
+              this.firstBreathLight.material.opacity = v;
+              const s = 0.3 + v * 1.4;
+              this.firstBreathLight.scale.set(s, s, 1);
+            }
+          });
+
+          this.anim.schedule(() => {
+            this.anim.tween({
+              from: 0,
+              to: 0.85,
+              duration: 2.4,
+              ease: 'easeInOutQuint',
+              onUpdate: (v) => {
+                this.starMat.opacity = v;
+                this.dustMat.opacity = v * 0.45;
+              }
+            });
+          }, 1000);
+
+          this.anim.schedule(() => {
+            this.nebulaSprites.forEach((sp) => {
+              this.anim.tween({
+                from: 0,
+                to: sp.userData.targetOpacity,
+                duration: 2.6,
+                ease: 'easeInOutQuint',
+                onUpdate: (v) => { sp.material.opacity = v; }
+              });
+            });
+          }, 2400);
+
+          this.anim.schedule(() => {
+            this.showStoryText('في مكان ما، بين كل هذه النجوم...');
+          }, 3800);
+
+          this.anim.schedule(() => {
+            this.hideStoryText();
+          }, 5800);
+
+          this.anim.schedule(() => {
+            this.showStoryText('هناك شيء أردت أن أصنعه لك.');
+          }, 7000);
+
+          this.anim.schedule(() => {
+            this.dom.topHud.classList.add('visible');
+            this.updateChapterDots(1);
+            this.showPrimaryButton('ابدئي الرحلة', () => {
+              this.transitionToChapter1();
+            });
+          }, 9000);
+        }
+
+        buildChapter1() {
+          this.clearGroup(this.chapter1Group);
+          const scale = this.getResponsiveSceneScale();
+          const count = this.settings.heartParticles;
+
+          const positions = new Float32Array(count * 3);
+          const starOrigins = new Float32Array(count * 3);
+          const orbitTargets = new Float32Array(count * 3);
+          const heartTargets = new Float32Array(count * 3);
+          const colors = new Float32Array(count * 3);
+
+          const c1 = new THREE.Color(CONFIG.palette.warmLight);
+          const c2 = new THREE.Color(CONFIG.palette.softRose);
+          const c3 = new THREE.Color(CONFIG.palette.dreamLavender);
+
+          for (let i = 0; i < count; i++) {
+            const i3 = i * 3;
+            const r0 = Math.pow(Math.random(), 2) * 0.55;
+            const theta0 = Math.random() * Math.PI * 2;
+            const phi0 = Math.acos(2 * Math.random() - 1);
+            starOrigins[i3] = r0 * Math.sin(phi0) * Math.cos(theta0);
+            starOrigins[i3 + 1] = r0 * Math.sin(phi0) * Math.sin(theta0) + 0.55;
+            starOrigins[i3 + 2] = r0 * Math.cos(phi0);
+
+            positions[i3] = starOrigins[i3];
+            positions[i3 + 1] = starOrigins[i3 + 1];
+            positions[i3 + 2] = starOrigins[i3 + 2];
+
+            const angle = Math.random() * Math.PI * 2;
+            const rad = 1.3 + Math.random() * 2.55;
+            orbitTargets[i3] = Math.cos(angle) * rad * scale;
+            orbitTargets[i3 + 1] = (Math.random() - 0.5) * 1.45 + 0.55;
+            orbitTargets[i3 + 2] = Math.sin(angle) * rad * scale;
+
+            const hp = sampleHeartPoint(scale * 1.05, i % 4 !== 0);
+            heartTargets[i3] = hp.x;
+            heartTargets[i3 + 1] = hp.y + 0.55;
+            heartTargets[i3 + 2] = hp.z;
+
+            const mixCol = i % 3 === 0 ? c1 : (i % 3 === 1 ? c2 : c3);
+            colors[i3] = mixCol.r;
+            colors[i3 + 1] = mixCol.g;
+            colors[i3 + 2] = mixCol.b;
+          }
+
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+          geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+          this.ch1Mat = new THREE.PointsMaterial({
+            size: 0.17,
+            map: this.glowTex,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.0,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          });
+
+          this.ch1Particles = new THREE.Points(geo, this.ch1Mat);
+          this.ch1Data = { starOrigins, orbitTargets, heartTargets, morphFactor: 0, heartBeating: false };
+
+          const coreMat = new THREE.SpriteMaterial({
+            map: this.glowTex,
+            color: CONFIG.palette.warmLight,
+            transparent: true,
+            opacity: 0.0,
+            blending: THREE.AdditiveBlending
+          });
+          this.ch1CoreSprite = new THREE.Sprite(coreMat);
+          this.ch1CoreSprite.position.set(0, 0.55, -0.2);
+          this.ch1CoreSprite.scale.set(2.6, 2.6, 1);
+
+          const haloMat = new THREE.SpriteMaterial({
+            map: this.violetGlowTex,
+            color: CONFIG.palette.softRose,
+            transparent: true,
+            opacity: 0.0,
+            blending: THREE.AdditiveBlending
+          });
+          this.ch1HaloSprite = new THREE.Sprite(haloMat);
+          this.ch1HaloSprite.position.set(0, 0.55, -0.5);
+          this.ch1HaloSprite.scale.set(5.2 * scale, 5.2 * scale, 1);
+
+          this.chapter1Group.add(this.ch1HaloSprite, this.ch1CoreSprite, this.ch1Particles);
+        }
+
+        transitionToChapter1() {
+          this.state.isTransitioning = true;
+          this.state.chapter = 1;
+          this.updateChapterDots(1);
+          this.hideStoryText();
+
+          this.buildChapter1();
+
+          this.anim.tween({
+            from: 18,
+            to: 11.4,
+            duration: 2.6,
+            ease: 'easeInOutQuint',
+            onUpdate: (z) => { this.camera.position.z = z; }
+          });
+
+          this.anim.tween({
+            from: this.firstBreathLight.material.opacity,
+            to: 0,
+            duration: 1.4,
+            onUpdate: (v) => { this.firstBreathLight.material.opacity = v; },
+            onComplete: () => { this.firstBreathLight.visible = false; }
+          });
+
+          this.anim.schedule(() => {
+            this.state.isTransitioning = false;
+            this.setChapterHeader('الفصل الأول', 'رسالة من بين النجوم');
+
+            this.anim.tween({
+              from: 0,
+              to: 0.98,
+              duration: 1.7,
+              ease: 'easeOutCubic',
+              onUpdate: (v) => {
+                this.ch1Mat.opacity = v;
+                this.ch1CoreSprite.material.opacity = v * 0.85;
+                this.ch1HaloSprite.material.opacity = v * 0.35;
+              }
+            });
+
+            this.showStoryText('من بين مليارات النجوم...');
+
+            this.anim.schedule(() => {
+              this.hideStoryText();
+            }, 2600);
+
+            this.anim.schedule(() => {
+              this.showStoryText('هناك نجمة واحدة\nلفتت انتباهي أكثر من الجميع.');
+              this.audio.playChime();
+              this.spawnShootingStar();
+            }, 3500);
+
+            this.anim.schedule(() => {
+              this.hideStoryText();
+              this.anim.tween({
+                from: 0,
+                to: 1,
+                duration: 2.2,
+                ease: 'easeInOutQuint',
+                onUpdate: (v) => {
+                  this.ch1Data.morphFactor = v;
+                  this.ch1CoreSprite.scale.set(2.6 + v * 2.0, 2.6 + v * 2.0, 1);
+                }
+              });
+            }, 6400);
+
+            this.anim.schedule(() => {
+              this.audio.playChime();
+              this.anim.tween({
+                from: 1,
+                to: 2,
+                duration: 2.5,
+                ease: 'easeOutQuart',
+                onUpdate: (v) => {
+                  this.ch1Data.morphFactor = v;
+                  this.ch1CoreSprite.material.opacity = Math.max(0.28, 0.85 - (v - 1) * 0.55);
+                  this.ch1HaloSprite.material.opacity = 0.35 + (v - 1) * 0.25;
+                },
+                onComplete: () => {
+                  this.ch1Data.heartBeating = true;
+                }
+              });
+            }, 8500);
+
+            this.anim.schedule(() => {
+              this.showStoryText('في عالم واسع إلى هذا الحد،\nبعض الأشياء تبدو\nوكأنها وجدت مكانها الصحيح.');
+            }, 11100);
+
+            this.anim.schedule(() => {
+              this.hideStoryText();
+            }, 14500);
+
+            this.anim.schedule(() => {
+              this.showStoryText('وأحيانًا،\nيكون وجود شخص واحد\nكافيًا ليجعل الأشياء\nأكثر جمالًا.');
+            }, 15500);
+
+            this.anim.schedule(() => {
+              this.showPrimaryButton('لنكتشف ما وراء النجوم', () => {
+                this.transitionToChapter2();
+              });
+            }, 18200);
+          }, 1100);
+        }
+
+        buildChapter2() {
+          this.clearGroup(this.chapter2Group);
+          this.dom.memHotspots.innerHTML = '';
+          this.ch2Objects = [];
+          this.ch2HitMeshes = [];
+          this.state.openedMemories.clear();
+          this.state.activeMemoryId = null;
+          this.state.allMemoriesConverged = false;
+
+          this.dom.memNodes.forEach((n) => n.classList.remove('unlocked', 'converged'));
+
+          const isLandscape = window.innerWidth > window.innerHeight;
+          const layout = isLandscape
+            ? [
+                { x: -4.2, y: 1.2, z: 0 },
+                { x: -2.1, y: -1.1, z: 0.6 },
+                { x: 0.0, y: 1.4, z: -0.4 },
+                { x: 2.1, y: -1.1, z: 0.6 },
+                { x: 4.2, y: 1.2, z: 0 }
+              ]
+            : [
+                { x: -1.85, y: 2.35, z: 0.2 },
+                { x: 1.85, y: 2.15, z: -0.2 },
+                { x: 0.0, y: 0.35, z: 0.7 },
+                { x: -1.75, y: -1.65, z: 0.1 },
+                { x: 1.75, y: -1.85, z: -0.1 }
+              ];
+
+          CONFIG.memories.forEach((mem, idx) => {
+            const group = new THREE.Group();
+            const home = new THREE.Vector3(layout[idx].x, layout[idx].y, layout[idx].z);
+            group.position.copy(home);
+            group.scale.set(0.001, 0.001, 0.001);
+
+            const hitMesh = new THREE.Mesh(
+              new THREE.SphereGeometry(1.05, 16, 16),
+              new THREE.MeshBasicMaterial({ visible: false })
+            );
+            hitMesh.userData.memoryId = idx;
+            group.add(hitMesh);
+            this.ch2HitMeshes.push(hitMesh);
+
+            if (idx === 0) {
+              const shell = new THREE.Mesh(
+                new THREE.SphereGeometry(0.68, 28, 28),
+                new THREE.MeshBasicMaterial({ color: 0xFFF0D5, transparent: true, opacity: 0.24 })
+              );
+              const rim = new THREE.Mesh(
+                new THREE.RingGeometry(0.69, 0.73, 48),
+                new THREE.MeshBasicMaterial({ color: 0xFFF0D5, side: THREE.DoubleSide, transparent: true, opacity: 0.6 })
+              );
+              const core = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: this.glowTex, color: 0xFFF0D5, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending
+              }));
+              core.scale.set(1.5, 1.5, 1);
+              group.add(shell, rim, core);
+            } else if (idx === 1) {
+              for (let r = 0; r < 3; r++) {
+                const torus = new THREE.Mesh(
+                  new THREE.TorusGeometry(0.45 + r * 0.15, 0.02, 12, 48),
+                  new THREE.MeshBasicMaterial({ color: 0xDFA5C8, transparent: true, opacity: 0.78 - r * 0.16 })
+                );
+                torus.rotation.x = r * 0.65;
+                torus.rotation.y = r * 0.5;
+                group.add(torus);
+              }
+              const spark = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: this.glowTex, color: 0xDFA5C8, transparent: true, opacity: 0.88, blending: THREE.AdditiveBlending
+              }));
+              spark.scale.set(1.25, 1.25, 1);
+              group.add(spark);
+            } else if (idx === 2) {
+              const pCount = this.settings.orbParticles;
+              const pPos = new Float32Array(pCount * 3);
+              for (let p = 0; p < pCount; p++) {
+                const angle = (p / pCount) * Math.PI * 2 * 5;
+                const petal = Math.sin(angle * 2.5) * 0.45 + 0.35;
+                pPos[p * 3] = Math.cos(angle) * petal;
+                pPos[p * 3 + 1] = Math.sin(angle) * petal;
+                pPos[p * 3 + 2] = Math.cos(angle * 3) * 0.25;
+              }
+              const pGeo = new THREE.BufferGeometry();
+              pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+              const flower = new THREE.Points(pGeo, new THREE.PointsMaterial({
+                size: 0.15, map: this.violetGlowTex, color: 0xA18BEA, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending, depthWrite: false
+              }));
+              const centerGlow = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: this.violetGlowTex, color: 0xF6F2FF, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending
+              }));
+              centerGlow.scale.set(1.15, 1.15, 1);
+              group.add(flower, centerGlow);
+            } else if (idx === 3) {
+              const moon = new THREE.Mesh(
+                new THREE.SphereGeometry(0.46, 24, 24),
+                new THREE.MeshBasicMaterial({ color: 0x9BBEEA, transparent: true, opacity: 0.75 })
+              );
+              const orbit = new THREE.Mesh(
+                new THREE.TorusGeometry(0.78, 0.016, 10, 48),
+                new THREE.MeshBasicMaterial({ color: 0xF6F2FF, transparent: true, opacity: 0.58 })
+              );
+              orbit.rotation.x = 1.15;
+              orbit.rotation.y = 0.35;
+              const halo = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: this.blueGlowTex, color: 0x9BBEEA, transparent: true, opacity: 0.88, blending: THREE.AdditiveBlending
+              }));
+              halo.scale.set(1.45, 1.45, 1);
+              group.add(moon, orbit, halo);
+            } else {
+              const crystal = new THREE.Mesh(
+                new THREE.OctahedronGeometry(0.62, 0),
+                new THREE.MeshBasicMaterial({ color: 0xD5A88D, wireframe: true, transparent: true, opacity: 0.7 })
+              );
+              const innerCrystal = new THREE.Mesh(
+                new THREE.OctahedronGeometry(0.36, 0),
+                new THREE.MeshBasicMaterial({ color: 0xFFF0D5, transparent: true, opacity: 0.48 })
+              );
+              const core = new THREE.Sprite(new THREE.SpriteMaterial({
+                map: this.glowTex, color: 0xD5A88D, transparent: true, opacity: 0.92, blending: THREE.AdditiveBlending
+              }));
+              core.scale.set(1.35, 1.35, 1);
+              group.add(crystal, innerCrystal, core);
+            }
+
+            group.userData = { id: idx, home, phase: idx * 1.3, opened: false };
+            this.chapter2Group.add(group);
+            this.ch2Objects.push(group);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'memory-hotspot';
+            btn.setAttribute('aria-label', `${mem.code} — ${mem.title}`);
+            btn.innerHTML = `<span class="memory-hotspot-label">${mem.title}</span>`;
+            const handleSelect = (ev) => {
+              ev.stopPropagation();
+              if (this.state.chapter !== 2 || this.state.activeMemoryId !== null) return;
+              this.openMemory(idx);
+            };
+            btn.addEventListener('click', handleSelect);
+            this.dom.memHotspots.appendChild(btn);
+            group.userData.hotspot = btn;
+          });
+        }
+
+        transitionToChapter2() {
+          this.state.isTransitioning = true;
+          this.state.chapter = 2;
+          this.updateChapterDots(2);
+          this.hideStoryText();
+
+          this.ch1Data.heartBeating = false;
+          this.anim.tween({
+            from: 2,
+            to: 1,
+            duration: 1.6,
+            ease: 'easeInOutQuint',
+            onUpdate: (v) => {
+              this.ch1Data.morphFactor = v;
+              this.ch1Mat.opacity = Math.max(0, (v - 1) * 0.9);
+              this.ch1CoreSprite.material.opacity = Math.max(0, (v - 1) * 0.5);
+              this.ch1HaloSprite.material.opacity = Math.max(0, (v - 1) * 0.3);
+            },
+            onComplete: () => {
+              this.clearGroup(this.chapter1Group);
+            }
+          });
+
+          this.nebulaSprites.forEach((sp, i) => {
+            sp.material.color.setHex(i % 2 === 0 ? CONFIG.palette.softRose : CONFIG.palette.dreamLavender);
+          });
+
+          this.anim.schedule(() => {
+            this.buildChapter2();
+            this.setChapterHeader('الفصل الثاني', 'تفاصيل صغيرة، ومشاعر كبيرة');
+            this.dom.memProgressBar.classList.add('visible');
+            this.dom.gestureHint.textContent = 'المسي كل عنصر لتكتشفي ما بداخله';
+            this.dom.gestureHint.classList.add('visible');
+
+            this.ch2Objects.forEach((obj, idx) => {
+              this.anim.schedule(() => {
+                this.anim.tween({
+                  from: 0.001,
+                  to: 1,
+                  duration: 1.1,
+                  ease: 'easeOutQuart',
+                  onUpdate: (s) => { obj.scale.set(s, s, s); },
+                  onComplete: () => {
+                    if (obj.userData.hotspot) obj.userData.hotspot.classList.add('active');
+                  }
+                });
+              }, idx * 170);
+            });
+
+            this.state.isTransitioning = false;
+          }, 1250);
+        }
+
+        openMemory(id) {
+          if (this.state.activeMemoryId !== null) return;
+          this.state.activeMemoryId = id;
+          const mem = CONFIG.memories[id];
+          const targetObj = this.ch2Objects[id];
+          if (!mem || !targetObj) return;
+
+          this.audio.enable();
+          this.audio.playMemoryOpen();
+
+          this.ch2Objects.forEach((o) => {
+            if (o.userData.hotspot) o.userData.hotspot.classList.remove('active');
+          });
+          this.dom.gestureHint.classList.remove('visible');
+          this.dom.canvas.classList.add('is-blurred');
+
+          this.anim.tween({
+            from: 0,
+            to: 1,
+            duration: 0.9,
+            ease: 'easeOutQuart',
+            onUpdate: (p) => {
+              targetObj.position.lerpVectors(targetObj.userData.home, new THREE.Vector3(0, 1.35, 4.2), p);
+              const s = 1 + p * 0.45;
+              targetObj.scale.set(s, s, s);
+            }
+          });
+
+          if (!this.state.openedMemories.has(id)) {
+            this.state.openedMemories.add(id);
+            targetObj.userData.opened = true;
+            if (targetObj.userData.hotspot) targetObj.userData.hotspot.classList.add('opened');
+            const node = this.dom.memNodes[id];
+            if (node) node.classList.add('unlocked');
+          }
+
+          this.dom.memReaderTitle.textContent = `${mem.code} — ${mem.title}`;
+          this.dom.memReaderBody.innerHTML = mem.text.replace(/\n/g, '<br>');
+          this.dom.memReader.setAttribute('aria-hidden', 'false');
+          this.dom.memReader.classList.add('open');
+        }
+
+        closeMemory() {
+          const id = this.state.activeMemoryId;
+          if (id === null) return;
+          const targetObj = this.ch2Objects[id];
+
+          this.audio.playSoftClick();
+          this.dom.memReader.classList.remove('open');
+          this.dom.memReader.setAttribute('aria-hidden', 'true');
+          this.dom.canvas.classList.remove('is-blurred');
+
+          const startPos = targetObj.position.clone();
+          this.anim.tween({
+            from: 0,
+            to: 1,
+            duration: 0.85,
+            ease: 'easeInOutQuint',
+            onUpdate: (p) => {
+              targetObj.position.lerpVectors(startPos, targetObj.userData.home, p);
+              const s = 1.45 - p * 0.45;
+              targetObj.scale.set(s, s, s);
+            },
+            onComplete: () => {
+              this.state.activeMemoryId = null;
+              if (this.state.openedMemories.size >= CONFIG.memories.length && !this.state.allMemoriesConverged) {
+                this.triggerAllMemoriesComplete();
+              } else {
+                this.ch2Objects.forEach((o) => {
+                  if (o.userData.hotspot) o.userData.hotspot.classList.add('active');
+                });
+              }
+            }
+          });
+        }
+
+        triggerAllMemoriesComplete() {
+          this.state.allMemoriesConverged = true;
+          this.audio.playChime();
+          this.dom.memNodes.forEach((n) => n.classList.add('converged'));
+
+          const radius = 2.1 * this.getResponsiveSceneScale();
+          this.ch2Objects.forEach((obj, idx) => {
+            const angle = (idx / 5) * Math.PI * 2 - Math.PI / 2;
+            const targetPos = new THREE.Vector3(Math.cos(angle) * radius, Math.sin(angle) * radius + 0.5, 0.8);
+            const startPos = obj.position.clone();
+            this.anim.tween({
+              from: 0,
+              to: 1,
+              duration: 1.7,
+              ease: 'easeInOutQuint',
+              onUpdate: (p) => { obj.position.lerpVectors(startPos, targetPos, p); }
+            });
+          });
+
+          this.anim.schedule(() => {
+            this.showStoryText('بقي شيء واحد...');
+          }, 900);
+
+          this.anim.schedule(() => {
+            this.hideStoryText();
+          }, 3200);
+
+          this.anim.schedule(() => {
+            this.showStoryText('شيء لم أستطع وضعه\nداخل ذكرى.');
+          }, 4200);
+
+          this.anim.schedule(() => {
+            this.showPrimaryButton('اكتشاف الأخير', () => {
+              this.transitionToChapter3();
+            });
+          }, 6800);
+        }
+
+        transitionToChapter3() {
+          this.state.isTransitioning = true;
+          this.state.chapter = 3;
+          this.updateChapterDots(3);
+          this.hideStoryText();
+          this.dom.memProgressBar.classList.remove('visible');
+          this.audio.playPortal();
+
+          this.clearGroup(this.portalGroup);
+          const portalRings = [];
+          for (let i = 0; i < 6; i++) {
+            const ring = new THREE.Mesh(
+              new THREE.TorusGeometry(1.4 + i * 0.45, 0.025, 12, 64),
+              new THREE.MeshBasicMaterial({
+                color: i % 2 === 0 ? CONFIG.palette.warmLight : CONFIG.palette.dreamLavender,
+                transparent: true,
+                opacity: 0.0
+              })
+            );
+            ring.position.z = -i * 1.4;
+            this.portalGroup.add(ring);
+            portalRings.push(ring);
+          }
+
+          this.anim.tween({
+            from: 0,
+            to: 1,
+            duration: 1.5,
+            ease: 'easeInOutQuint',
+            onUpdate: (p) => {
+              portalRings.forEach((r, idx) => {
+                r.material.opacity = p * (0.75 - idx * 0.08);
+                r.rotation.z = p * (idx % 2 === 0 ? 1.8 : -1.8);
+              });
+              this.ch2Objects.forEach((o) => {
+                const s = Math.max(0.001, 1 - p);
+                o.scale.set(s, s, s);
+              });
+            }
+          });
+
+          this.anim.schedule(() => {
+            this.anim.tween({
+              from: this.camera.position.z,
+              to: -6,
+              duration: 1.9,
+              ease: 'easeInCubic',
+              onUpdate: (z) => {
+                this.camera.position.z = z;
+                portalRings.forEach((r, idx) => { r.rotation.z += 0.025 * (idx % 2 === 0 ? 1 : -1); });
+              },
+              onComplete: () => {
+                this.clearGroup(this.chapter2Group);
+                this.clearGroup(this.portalGroup);
+                this.camera.position.set(0, 0, 12.8);
+                this.enterChapter3();
+              }
+            });
+          }, 1200);
+        }
+
+        buildChapter3() {
+          this.clearGroup(this.chapter3Group);
+          const scale = this.getResponsiveSceneScale();
+          const count = this.settings.heartParticles;
+
+          const positions = new Float32Array(count * 3);
+          const scatterOrigins = new Float32Array(count * 3);
+          const heartBase = new Float32Array(count * 3);
+          const phases = new Float32Array(count);
+          const drawOrder = new Float32Array(count);
+          const colors = new Float32Array(count * 3);
+
+          const colCore = new THREE.Color(CONFIG.palette.warmLight);
+          const colMid = new THREE.Color(CONFIG.palette.softRose);
+          const colOuter = new THREE.Color(CONFIG.palette.dreamLavender);
+
+          for (let i = 0; i < count; i++) {
+            const i3 = i * 3;
+            const isShell = i % 5 !== 0;
+            const hp = sampleHeartPoint(scale * 1.55, isShell);
+
+            heartBase[i3] = hp.x;
+            heartBase[i3 + 1] = hp.y + 0.65;
+            heartBase[i3 + 2] = hp.z;
+
+            // نقاط البداية متناثرة حول مدار واسع لتُرسَم وتجتمع تدريجيًا نحو القلب
+            const ang = Math.random() * Math.PI * 2;
+            const rad = 4.2 + Math.random() * 5.2;
+            scatterOrigins[i3] = Math.cos(ang) * rad * scale;
+            scatterOrigins[i3 + 1] = (Math.random() - 0.5) * 6.5 + 0.65;
+            scatterOrigins[i3 + 2] = Math.sin(ang) * rad * scale;
+
+            positions[i3] = scatterOrigins[i3];
+            positions[i3 + 1] = scatterOrigins[i3 + 1];
+            positions[i3 + 2] = scatterOrigins[i3 + 2];
+
+            // ترتيب رسم تدريجي حول محيط القلب من الأعلى
+            const angleAroundHeart = (Math.atan2(hp.y + 0.65 - 0.65, hp.x) + Math.PI) / (Math.PI * 2);
+            drawOrder[i] = angleAroundHeart * 0.65 + Math.random() * 0.35;
+
+            phases[i] = Math.random() * Math.PI * 2;
+
+            const c = i % 3 === 0 ? colCore : (i % 3 === 1 ? colMid : colOuter);
+            colors[i3] = c.r;
+            colors[i3 + 1] = c.g;
+            colors[i3 + 2] = c.b;
+          }
+
+          const heartGeo = new THREE.BufferGeometry();
+          heartGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+          heartGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+          this.ch3HeartMat = new THREE.PointsMaterial({
+            size: 0.16,
+            map: this.glowTex,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.0,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          });
+
+          this.ch3HeartPoints = new THREE.Points(heartGeo, this.ch3HeartMat);
+
+          this.ch3Aura = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: this.glowTex, color: CONFIG.palette.softRose, transparent: true, opacity: 0.0, blending: THREE.AdditiveBlending
+          }));
+          this.ch3Aura.position.set(0, 0.65, -0.6);
+          this.ch3Aura.scale.set(0.4, 0.4, 1);
+
+          const nameTex = createCrispNameTexture(CONFIG.recipientName);
+          this.ch3NameSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: nameTex,
+            transparent: true,
+            opacity: 0.0,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+          }));
+          this.ch3NameSprite.position.set(0, 0.72, 0.45);
+          this.ch3NameSprite.scale.set(2.8 * scale, 0.7 * scale, 1);
+
+          this.ch3CrownStar = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: this.glowTex, color: CONFIG.palette.warmLight, transparent: true, opacity: 0.0, blending: THREE.AdditiveBlending
+          }));
+          this.ch3CrownStar.position.set(0, 2.35 * scale + 0.65, 0.2);
+          this.ch3CrownStar.scale.set(0.3, 0.3, 1);
+
+          this.ch3Orbits = [];
+          const ringSpecs = [
+            { radius: 3.35 * scale, tiltX: 1.18, tiltY: 0.24, speed: 0.28, color: CONFIG.palette.dreamLavender },
+            { radius: 3.72 * scale, tiltX: -1.12, tiltY: -0.28, speed: -0.22, color: CONFIG.palette.softRose }
+          ];
+
+          ringSpecs.forEach((spec) => {
+            const orbitGroup = new THREE.Group();
+            orbitGroup.rotation.x = spec.tiltX;
+            orbitGroup.rotation.y = spec.tiltY;
+            orbitGroup.position.y = 0.65;
+            orbitGroup.scale.set(0.15, 0.15, 0.15);
+
+            const ringMesh = new THREE.Mesh(
+              new THREE.TorusGeometry(spec.radius, 0.015, 10, 96),
+              new THREE.MeshBasicMaterial({ color: spec.color, transparent: true, opacity: 0.0 })
+            );
+            ringMesh.rotation.x = Math.PI / 2;
+            orbitGroup.add(ringMesh);
+            orbitGroup.userData = { speed: spec.speed, mesh: ringMesh, radius: spec.radius };
+
+            this.chapter3Group.add(orbitGroup);
+            this.ch3Orbits.push(orbitGroup);
+          });
+
+          const wordCount = this.settings.orbitalWordCount;
+          this.ch3WordSprites = [];
+          for (let i = 0; i < wordCount; i++) {
+            const word = CONFIG.orbitalLoveWords[i % CONFIG.orbitalLoveWords.length];
+            const tex = createOrbitalWordTexture(word);
+            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+              map: tex, transparent: true, opacity: 0.0, depthWrite: false
+            }));
+            const parentOrbit = this.ch3Orbits[i % this.ch3Orbits.length];
+            const angle = (i / wordCount) * Math.PI * 2;
+            const r = parentOrbit.userData.radius;
+            sprite.position.set(Math.cos(angle) * r, 0, Math.sin(angle) * r);
+            sprite.scale.set(2.0 * scale, 0.5 * scale, 1);
+            parentOrbit.add(sprite);
+            this.ch3WordSprites.push(sprite);
+          }
+
+          this.ch3Data = {
+            scatterOrigins,
+            heartBase,
+            phases,
+            drawOrder,
+            assembleProgress: 0,
+            nameRevealed: false,
+            orbitSpeedMult: 1
+          };
+
+          this.chapter3Group.add(this.ch3HeartPoints, this.ch3Aura, this.ch3NameSprite, this.ch3CrownStar);
+        }
+
+        enterChapter3() {
+          this.buildChapter3();
+          this.state.isTransitioning = false;
+          this.state.chapter3Phase = 'narrative';
+          this.setChapterHeader('الفصل الثالث', 'عالم صُنع من أجلك');
+
+          this.nebulaSprites.forEach((sp, i) => {
+            sp.material.color.setHex(i === 0 ? CONFIG.palette.nebulaViolet : (i === 1 ? CONFIG.palette.softRose : CONFIG.palette.dreamLavender));
+          });
+
+          const sc = this.getResponsiveSceneScale();
+
+          // أنميشن رسم وتشكّل القلب تدريجيًا من النجوم
+          this.anim.tween({
+            from: 0,
+            to: 1,
+            duration: 3.4,
+            ease: 'easeInOutQuint',
+            onUpdate: (v) => {
+              this.ch3Data.assembleProgress = v;
+              this.ch3HeartMat.opacity = Math.min(0.95, v * 1.15);
+              const auraS = (0.5 + v * 5.1) * sc;
+              this.ch3Aura.scale.set(auraS, auraS, 1);
+              this.ch3Aura.material.opacity = v * 0.38;
+
+              const ringScale = 0.2 + v * 0.8;
+              this.ch3Orbits.forEach((o) => {
+                o.scale.set(ringScale, ringScale, ringScale);
+                o.userData.mesh.material.opacity = v * 0.42;
+              });
+              this.ch3WordSprites.forEach((s) => { s.material.opacity = v * 0.78; });
+            }
+          });
+
+          this.anim.schedule(() => { this.showStoryText('لو كان للحب مكان...'); }, 3200);
+          this.anim.schedule(() => { this.hideStoryText(); }, 5900);
+          this.anim.schedule(() => { this.showStoryText('لربما وجدته\nفي الأشياء التي تشبهك.'); }, 6900);
+          this.anim.schedule(() => { this.hideStoryText(); }, 9900);
+
+          this.anim.schedule(() => {
+            this.showStoryText('وفي كل مرة حاولت فيها\nأن أصف شعورًا جميلًا...');
+            this.anim.tween({ from: 1, to: 0.55, duration: 2.2, ease: 'easeInOutCubic', onUpdate: (v) => { this.ch3Data.orbitSpeedMult = v; } });
+          }, 10900);
+
+          this.anim.schedule(() => { this.hideStoryText(); }, 14200);
+          this.anim.schedule(() => { this.showStoryText('وجدت أن الكلمات\nأصغر من الشعور.'); }, 15200);
+          this.anim.schedule(() => { this.hideStoryText(); }, 18400);
+
+          this.anim.schedule(() => {
+            this.triggerParticleReleaseAndName();
+          }, 19400);
+        }
+
+        triggerParticleReleaseAndName() {
+          this.state.chapter3Phase = 'releasing';
+
+          this.anim.tween({ from: this.ch3Data.orbitSpeedMult, to: 0.45, duration: 1.8, ease: 'easeInOutCubic', onUpdate: (v) => { this.ch3Data.orbitSpeedMult = v; } });
+
+          this.showStoryText('هناك شيء\nأردت أن أهديه لك...');
+          this.anim.schedule(() => { this.hideStoryText(); }, 2700);
+
+          this.anim.schedule(() => {
+            this.audio.playNameReveal();
+            this.ch3Data.nameRevealed = true;
+            this.state.chapter3Phase = 'nameRevealed';
+            const sc = this.getResponsiveSceneScale();
+
+            this.anim.tween({
+              from: 0,
+              to: 1,
+              duration: 2.0,
+              ease: 'easeOutQuart',
+              onUpdate: (v) => {
+                this.ch3NameSprite.material.opacity = v;
+                const ns = 0.78 + v * 0.22;
+                this.ch3NameSprite.scale.set(3.45 * sc * ns, 0.86 * sc * ns, 1);
+                this.ch3CrownStar.material.opacity = v * 0.95;
+                const cs = 0.3 + v * 0.85;
+                this.ch3CrownStar.scale.set(cs, cs, 1);
+                this.ch3Aura.material.opacity = 0.38 + v * 0.2;
+              }
+            });
+          }, 3400);
+
+          const finalMessages = [
+            'إلى الشخص\nالذي يجعل الأيام العادية\nأكثر جمالًا...',
+            'لم أحتج إلى مناسبة\nلأصنع لك هذه الرحلة.',
+            'أردت فقط أن أصنع شيئًا\nيكون مختلفًا عن الكلمات المعتادة.',
+            'شيئًا صغيرًا،\nلكنه صُنع بكل اهتمام.',
+            'وبين كل هذه النجوم،\nوكل هذه التفاصيل،\nوكل هذه العوالم...'
+          ];
+
+          let delay = 6200;
+          finalMessages.forEach((msg) => {
+            this.anim.schedule(() => { this.showStoryText(msg); }, delay);
+            this.anim.schedule(() => { this.hideStoryText(); }, delay + 3000);
+            delay += 4000;
+          });
+
+          this.anim.schedule(() => {
+            this.audio.playHeartbeat();
+            this.heartbeatPhase = 0.01;
+            this.showStoryText('أحبك.', { isClimax: true });
+            this.state.chapter3Phase = 'eternal';
+
+            this.anim.tween({ from: 0.45, to: 0.75, duration: 2.5, ease: 'easeInOutCubic', onUpdate: (v) => { this.ch3Data.orbitSpeedMult = v; } });
+            this.anim.tween({
+              from: 0.35,
+              to: 0.72,
+              duration: 2.5,
+              ease: 'easeInOutCubic',
+              onUpdate: (v) => {
+                this.ch3WordSprites.forEach((s) => { s.material.opacity = v; });
+                this.ch3Orbits.forEach((o) => { o.userData.mesh.material.opacity = v * 0.65; });
+              }
+            });
+          }, delay + 500);
+
+          this.anim.schedule(() => {
+            this.dom.replayBtn.classList.add('visible');
+          }, delay + 4400);
+        }
+
+        replayExperience() {
+          if (this.state.isTransitioning) return;
+          this.state.isTransitioning = true;
+          this.audio.playPortal();
+
+          this.dom.replayBtn.classList.remove('visible');
+          this.dom.gestureHint.classList.remove('visible');
+          this.hideStoryText();
+          this.hideChapterHeader();
+
+          this.anim.tween({
+            from: 1,
+            to: 0,
+            duration: 1.7,
+            ease: 'easeInOutQuint',
+            onUpdate: (v) => {
+              if (this.ch3HeartMat) this.ch3HeartMat.opacity = v * 0.95;
+              if (this.ch3NameSprite) this.ch3NameSprite.material.opacity = v;
+              if (this.ch3CrownStar) this.ch3CrownStar.material.opacity = v * 0.95;
+              if (this.ch3Aura) this.ch3Aura.material.opacity = v * 0.45;
+              if (this.ch3Orbits) this.ch3Orbits.forEach((o) => { o.userData.mesh.material.opacity = v * 0.4; });
+              if (this.ch3WordSprites) this.ch3WordSprites.forEach((s) => { s.material.opacity = v * 0.7; });
+            },
+            onComplete: () => {
+              this.clearGroup(this.chapter3Group);
+              this.clearGroup(this.chapter2Group);
+              this.clearGroup(this.chapter1Group);
+              this.nebulaSprites.forEach((sp) => {
+                sp.material.color.setHex(0xFFFFFF);
+                sp.material.opacity = 0;
+              });
+              this.starMat.opacity = 0;
+              this.dustMat.opacity = 0;
+              this.startIntroSequence();
+            }
+          });
+        }
+
+        checkChapter2Raycast(clientX, clientY) {
+          if (this.state.chapter !== 2 || this.state.activeMemoryId !== null || !this.ch2HitMeshes || !this.ch2HitMeshes.length) {
+            return false;
+          }
+          const ndc = new THREE.Vector2(
+            (clientX / window.innerWidth) * 2 - 1,
+            -(clientY / window.innerHeight) * 2 + 1
+          );
+          this.raycaster.setFromCamera(ndc, this.camera);
+          const hits = this.raycaster.intersectObjects(this.ch2HitMeshes, false);
+          if (hits.length > 0 && typeof hits[0].object.userData.memoryId === 'number') {
+            this.openMemory(hits[0].object.userData.memoryId);
+            return true;
+          }
+          return false;
+        }
+
+        spawnTouchSpark(ndcX, ndcY) {
+          const vec = new THREE.Vector3(ndcX, ndcY, 0.5).unproject(this.camera);
+          const dir = vec.sub(this.camera.position).normalize();
+          const pos = this.camera.position.clone().add(dir.multiplyScalar(10));
+
+          const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: this.glowTex, color: CONFIG.palette.warmLight, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending
+          }));
+          sprite.position.copy(pos);
+          sprite.scale.set(0.3, 0.3, 1);
+          this.fxGroup.add(sprite);
+
+          this.anim.tween({
+            from: 0,
+            to: 1,
+            duration: 1.2,
+            ease: 'easeOutQuart',
+            onUpdate: (p) => {
+              const s = 0.3 + p * 2.2;
+              sprite.scale.set(s, s, 1);
+              sprite.material.opacity = (1 - p) * 0.85;
+              sprite.position.y += 0.01;
+            },
+            onComplete: () => {
+              this.fxGroup.remove(sprite);
+              sprite.material.dispose();
+            }
+          });
+        }
+
+        spawnShootingStar() {
+          const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: this.glowTex, color: CONFIG.palette.pearlWhite, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending
+          }));
+          const startX = (Math.random() - 0.3) * 18;
+          const startY = 6 + Math.random() * 6;
+          const z = -12 - Math.random() * 14;
+          sprite.position.set(startX, startY, z);
+          sprite.scale.set(1.5, 0.16, 1);
+          sprite.material.rotation = -0.45;
+          this.fxGroup.add(sprite);
+
+          this.anim.tween({
+            from: 0,
+            to: 1,
+            duration: 1.4,
+            ease: 'easeInOutCubic',
+            onUpdate: (p) => {
+              sprite.position.x = startX - p * 14;
+              sprite.position.y = startY - p * 6.8;
+              sprite.material.opacity = Math.sin(p * Math.PI) * 0.85;
+            },
+            onComplete: () => {
+              this.fxGroup.remove(sprite);
+              sprite.material.dispose();
+            }
+          });
+        }
+
+        animate() {
+          requestAnimationFrame(() => this.animate());
+
+          const dt = Math.min(this.clock.getDelta(), 0.05);
+          this.elapsed += dt;
+          this.perf.recordFrame(dt);
+          this.anim.update(dt);
+
+          this.pointer.x += (this.pointer.targetX - this.pointer.x) * 0.05;
+          this.pointer.y += (this.pointer.targetY - this.pointer.y) * 0.05;
+
+          const camOffsetX = (this.pointer.x * 0.85) + (this.deviceTilt.x * 0.65) + Math.sin(this.elapsed * 0.25) * 0.24;
+          const camOffsetY = (this.pointer.y * 0.65) + (this.deviceTilt.y * 0.5) + Math.cos(this.elapsed * 0.2) * 0.2;
+
+          this.camera.position.x += (camOffsetX - this.camera.position.x) * 0.055;
+          this.camera.position.y += (camOffsetY - this.camera.position.y) * 0.055;
+          this.camera.lookAt(0, 0.25, 0);
+
+          this.starField.rotation.y += dt * 0.012;
+          this.starField.rotation.x += dt * 0.004;
+          this.dustField.rotation.y -= dt * 0.018;
+
+          this.nebulaSprites.forEach((sp, idx) => {
+            sp.position.x += Math.sin(this.elapsed * 0.16 + idx) * 0.002;
+            sp.position.y += Math.cos(this.elapsed * 0.14 + idx) * 0.002;
+          });
+
+          if (this.firstBreathLight && this.firstBreathLight.visible) {
+            const pulse = 1 + Math.sin(this.elapsed * 2.2) * 0.14;
+            this.firstBreathLight.scale.set(1.5 * pulse, 1.5 * pulse, 1);
+          }
+
+          if (this.state.chapter === 1 && this.ch1Particles && this.ch1Data) {
+            const posAttr = this.ch1Particles.geometry.attributes.position;
+            const arr = posAttr.array;
+            const { starOrigins, orbitTargets, heartTargets, morphFactor, heartBeating } = this.ch1Data;
+            const count = arr.length / 3;
+
+            this.heartbeatPhase += dt * 2.25;
+            const beat = heartBeating ? (1 + Math.pow(Math.max(0, Math.sin(this.heartbeatPhase)), 6) * 0.095) : 1;
+
+            if (this.ch1HaloSprite && this.ch1HaloSprite.material.opacity > 0.01) {
+              const haloPulse = 1 + Math.sin(this.elapsed * 2.2) * 0.08;
+              const sc = this.getResponsiveSceneScale() * 5.2 * haloPulse;
+              this.ch1HaloSprite.scale.set(sc, sc, 1);
+            }
+
+            for (let i = 0; i < count; i++) {
+              const i3 = i * 3;
+              let tx, ty, tz;
+              if (morphFactor <= 1) {
+                const t = morphFactor;
+                const rot = this.elapsed * 0.8 * t;
+                const ox = orbitTargets[i3] * Math.cos(rot) - orbitTargets[i3 + 2] * Math.sin(rot);
+                const oz = orbitTargets[i3] * Math.sin(rot) + orbitTargets[i3 + 2] * Math.cos(rot);
+                tx = starOrigins[i3] + (ox - starOrigins[i3]) * t;
+                ty = starOrigins[i3 + 1] + (orbitTargets[i3 + 1] - starOrigins[i3 + 1]) * t;
+                tz = starOrigins[i3 + 2] + (oz - starOrigins[i3 + 2]) * t;
+              } else {
+                const t = morphFactor - 1;
+                const rot = this.elapsed * 0.8 * (1 - t);
+                const ox = orbitTargets[i3] * Math.cos(rot) - orbitTargets[i3 + 2] * Math.sin(rot);
+                const oz = orbitTargets[i3] * Math.sin(rot) + orbitTargets[i3 + 2] * Math.cos(rot);
+                tx = ox + (heartTargets[i3] * beat - ox) * t;
+                ty = orbitTargets[i3 + 1] + (heartTargets[i3 + 1] * beat - orbitTargets[i3 + 1]) * t;
+                tz = oz + (heartTargets[i3 + 2] * beat - oz) * t;
+              }
+
+              arr[i3] += (tx - arr[i3]) * 0.14;
+              arr[i3 + 1] += (ty - arr[i3 + 1]) * 0.14;
+              arr[i3 + 2] += (tz - arr[i3 + 2]) * 0.14;
+            }
+            posAttr.needsUpdate = true;
+            if (heartBeating) this.ch1Particles.rotation.y = Math.sin(this.elapsed * 0.55) * 0.2;
+          }
+
+          if (this.state.chapter === 2 && this.ch2Objects) {
+            this.ch2Objects.forEach((obj) => {
+              const isSelected = this.state.activeMemoryId === obj.userData.id;
+              const p = obj.userData.phase;
+
+              if (!isSelected && this.state.activeMemoryId === null) {
+                obj.position.y = obj.userData.home.y + Math.sin(this.elapsed * 1.15 + p) * 0.16;
+                obj.rotation.y += dt * 0.36;
+                obj.rotation.z = Math.sin(this.elapsed * 0.75 + p) * 0.14;
+              } else if (isSelected) {
+                obj.rotation.y += dt * 0.55;
+              }
+
+              if (obj.userData.hotspot && obj.userData.hotspot.classList.contains('active')) {
+                const proj = obj.position.clone().project(this.camera);
+                const sx = (proj.x * 0.5 + 0.5) * window.innerWidth;
+                const sy = (-proj.y * 0.5 + 0.5) * window.innerHeight;
+                obj.userData.hotspot.style.transform = `translate3d(calc(${sx}px - 50%), calc(${sy}px - 50%), 0)`;
+              }
+            });
+          }
+
+          if (this.state.chapter === 3 && this.ch3HeartPoints && this.ch3Data) {
+            const posAttr = this.ch3HeartPoints.geometry.attributes.position;
+            const arr = posAttr.array;
+            const { scatterOrigins, heartBase, phases, drawOrder, assembleProgress, orbitSpeedMult } = this.ch3Data;
+            const count = arr.length / 3;
+            const sc = this.getResponsiveSceneScale();
+
+            this.heartbeatPhase += dt * 2.55;
+            const lub = Math.pow(Math.max(0, Math.sin(this.heartbeatPhase)), 6);
+            const dub = Math.pow(Math.max(0, Math.sin(this.heartbeatPhase - 0.58)), 8) * 0.65;
+            const beatStrength = (lub + dub) * assembleProgress;
+            const pulse = 1 + beatStrength * 0.115;
+
+            const floatY = Math.sin(this.elapsed * 1.25) * 0.14 * assembleProgress;
+            const swayZ = Math.sin(this.elapsed * 0.9) * 0.045 * assembleProgress;
+
+            for (let i = 0; i < count; i++) {
+              const i3 = i * 3;
+              const ph = phases[i];
+
+              // حساب تقدم رسم كل نقطة حسب ترتيبها ليتشكّل القلب تدريجيًا
+              const localP = THREE.MathUtils.clamp((assembleProgress - drawOrder[i] * 0.45) / 0.55, 0, 1);
+              const smoothP = localP * localP * (3 - 2 * localP);
+
+              const swirlAngle = (1 - smoothP) * (this.elapsed * 0.9 + ph);
+              const sx = scatterOrigins[i3] * Math.cos(swirlAngle) - scatterOrigins[i3 + 2] * Math.sin(swirlAngle);
+              const sz = scatterOrigins[i3] * Math.sin(swirlAngle) + scatterOrigins[i3 + 2] * Math.cos(swirlAngle);
+              const sy = scatterOrigins[i3 + 1] + Math.sin(this.elapsed * 1.5 + ph) * 0.25 * (1 - smoothP);
+
+              const shimmerX = Math.sin(this.elapsed * 2.2 + ph) * 0.045 * smoothP;
+              const shimmerY = Math.cos(this.elapsed * 1.9 + ph * 1.3) * 0.045 * smoothP;
+              const shimmerZ = Math.sin(this.elapsed * 2.4 + ph * 0.8) * 0.06 * smoothP;
+
+              const hx = (heartBase[i3] + shimmerX) * pulse;
+              const hy = (heartBase[i3 + 1] + shimmerY + floatY) * pulse;
+              const hz = (heartBase[i3 + 2] + shimmerZ) * pulse;
+
+              const tx = sx + (hx - sx) * smoothP;
+              const ty = sy + (hy - sy) * smoothP;
+              const tz = sz + (hz - sz) * smoothP;
+
+              arr[i3] += (tx - arr[i3]) * 0.18;
+              arr[i3 + 1] += (ty - arr[i3 + 1]) * 0.18;
+              arr[i3 + 2] += (tz - arr[i3 + 2]) * 0.18;
+            }
+            posAttr.needsUpdate = true;
+
+            this.ch3HeartPoints.rotation.y = Math.sin(this.elapsed * 0.65) * 0.14 * assembleProgress;
+            this.ch3HeartPoints.rotation.z = swayZ;
+
+            if (this.ch3Aura && this.ch3Aura.material.opacity > 0.01) {
+              const auraScale = (0.5 + assembleProgress * 4.9 + beatStrength * 1.15 + Math.sin(this.elapsed * 1.7) * 0.25) * sc;
+              this.ch3Aura.position.y = 0.65 + floatY;
+              this.ch3Aura.scale.set(auraScale, auraScale, 1);
+            }
+
+            if (this.ch3NameSprite && this.ch3NameSprite.material.opacity > 0.01) {
+              const namePulse = 1 + beatStrength * 0.055;
+              this.ch3NameSprite.position.y = 0.72 + floatY;
+              this.ch3NameSprite.scale.set(3.45 * sc * namePulse, 0.86 * sc * namePulse, 1);
+            }
+
+            if (this.ch3CrownStar && this.ch3CrownStar.material.opacity > 0.01) {
+              const starPulse = 1 + beatStrength * 0.28 + Math.sin(this.elapsed * 3.4) * 0.14;
+              this.ch3CrownStar.position.y = 2.35 * sc + 0.65 + floatY;
+              this.ch3CrownStar.scale.set(1.15 * starPulse, 1.15 * starPulse, 1);
+              this.ch3CrownStar.material.rotation = this.elapsed * 0.6;
+            }
+
+            this.ch3Orbits.forEach((orbit, idx) => {
+              orbit.rotation.y += dt * orbit.userData.speed * orbitSpeedMult;
+              orbit.position.y = 0.65 + floatY * 0.75 + Math.sin(this.elapsed * 1.1 + idx) * 0.04;
+            });
+
+            if (this.ch3WordSprites) {
+              const worldPos = new THREE.Vector3();
+              this.ch3WordSprites.forEach((sp, i) => {
+                sp.getWorldPosition(worldPos);
+                const depthFactor = THREE.MathUtils.clamp((worldPos.z + 3.5) / 7, 0.28, 1);
+                const wordWave = 1 + Math.sin(this.elapsed * 2.0 + i) * 0.05;
+                sp.scale.set(2.0 * sc * wordWave, 0.5 * sc * wordWave, 1);
+                if (this.state.chapter3Phase === 'narrative' || this.state.chapter3Phase === 'eternal') {
+                  sp.material.opacity = depthFactor * assembleProgress * (this.state.chapter3Phase === 'eternal' ? 0.68 : 0.85);
+                }
+              });
+            }
+
+            if (Math.random() < dt * (this.state.chapter3Phase === 'eternal' ? 0.55 : 0.25)) {
+              this.spawnShootingStar();
+            }
+          }
+
+          this.renderer.render(this.scene, this.camera);
+        }
+
+        bindEvents() {
+          const onPointerDown = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            this.pointer.isDown = true;
+            this.pointer.startX = clientX;
+            this.pointer.startY = clientY;
+          };
+
+          const onPointerMove = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            this.pointer.targetX = (clientX / window.innerWidth) * 2 - 1;
+            this.pointer.targetY = -(clientY / window.innerHeight) * 2 + 1;
+          };
+
+          const onPointerUp = (e) => {
+            if (!this.pointer.isDown) return;
+            this.pointer.isDown = false;
+            const clientX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+            const clientY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+            const dist = Math.hypot(clientX - this.pointer.startX, clientY - this.pointer.startY);
+
+            if (dist < 18) {
+              const hitMemory = this.checkChapter2Raycast(clientX, clientY);
+              if (!hitMemory && e.target === this.dom.canvas) {
+                const ndcX = (clientX / window.innerWidth) * 2 - 1;
+                const ndcY = -(clientY / window.innerHeight) * 2 + 1;
+                this.spawnTouchSpark(ndcX, ndcY);
+              }
+            }
+          };
+
+          window.addEventListener('pointerdown', onPointerDown, { passive: true });
+          window.addEventListener('pointermove', onPointerMove, { passive: true });
+          window.addEventListener('pointerup', onPointerUp, { passive: true });
+
+          this.dom.soundToggle.addEventListener('click', () => { this.audio.toggle(); });
+
+          this.dom.motionToggle.addEventListener('click', async () => {
+            if (this.deviceTilt.enabled) {
+              this.deviceTilt.enabled = false;
+              this.deviceTilt.x = 0;
+              this.deviceTilt.y = 0;
+              this.dom.motionToggle.classList.remove('active');
+              return;
+            }
+            try {
+              if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                const res = await DeviceOrientationEvent.requestPermission();
+                if (res !== 'granted') return;
+              }
+              window.addEventListener('deviceorientation', (ev) => {
+                if (!this.deviceTilt.enabled) return;
+                this.deviceTilt.x = THREE.MathUtils.clamp(ev.gamma || 0, -25, 25) / 25;
+                this.deviceTilt.y = -THREE.MathUtils.clamp((ev.beta || 45) - 45, -25, 25) / 25;
+              });
+              this.deviceTilt.enabled = true;
+              this.dom.motionToggle.classList.add('active');
+              this.audio.playSoftClick();
+            } catch (err) {}
+          });
+
+          this.dom.memBackBtn.addEventListener('click', () => { this.closeMemory(); });
+          this.dom.replayBtn.addEventListener('click', () => { this.replayExperience(); });
+
+          const onResize = () => {
+            if (!this.renderer || !this.camera) return;
+            this.camera.fov = this.getResponsiveFOV();
+            this.camera.aspect = window.innerWidth / window.innerHeight;
+            this.camera.updateProjectionMatrix();
+            this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.settings.dpr));
+            this.renderer.setSize(window.innerWidth, window.innerHeight);
+          };
+
+          window.addEventListener('resize', onResize);
+          window.addEventListener('orientationchange', () => setTimeout(onResize, 120));
+        }
+
+        clearGroup(group) {
+          while (group.children.length > 0) {
+            const child = group.children[0];
+            group.remove(child);
+            if (child.geometry) child.geometry.dispose();
+            if (child.material) {
+              if (child.material.map) child.material.map.dispose();
+              child.material.dispose();
+            }
+          }
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', () => {
+        try {
+          if (typeof THREE === 'undefined') throw new Error('Three.js not loaded');
+          window.__loveExperience = new CinematicLoveExperience();
+        } catch (err) {
+          const story = document.getElementById('story-line');
+          const btn = document.getElementById('primary-btn');
+          if (story && btn) {
+            story.textContent = 'في مكان ما، بين كل هذه النجوم... هناك شيء أردت أن أصنعه لك.';
+            story.classList.add('active');
+            btn.textContent = 'أحبك يا LINA';
+            btn.classList.add('visible');
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
